@@ -1,8 +1,8 @@
 
 import 'package:flutter/cupertino.dart';
 
-import '../constants.dart';
-import '../size_config.dart';
+import '../../constants.dart';
+import '../../size_config.dart';
 
 class SplashContent extends StatelessWidget {
   const SplashContent({

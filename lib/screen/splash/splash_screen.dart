@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/size_config.dart';
-import 'package:flutter_ecommerce/widget/body.dart';
+import 'package:flutter_ecommerce/screen/splash/body.dart';
 
 class SplashScreen extends StatelessWidget {
   static String routeName = "/splash";

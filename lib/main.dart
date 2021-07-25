@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/constants.dart';
 import 'package:flutter_ecommerce/routes.dart';
-import 'package:flutter_ecommerce/screen/splash_screen.dart';
+import 'package:flutter_ecommerce/screen/splash/splash_screen.dart';
+import 'package:flutter_ecommerce/widget/theme.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,15 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        fontFamily: "Muli",
-        textTheme: TextTheme(
-          bodyText1: TextStyle(color: kTextColor),
-          bodyText2: TextStyle(color: kTextColor)
-        ),
-        visualDensity: VisualDensity.adaptivePlatformDensity,   // 自動適應畫面大小
-      ),
+      theme: theme(),
       // home: SplashScreen(),
       initialRoute: SplashScreen.routeName,  // Note: 需要確保沒有同時設有 home 屬性
       routes: routes,
