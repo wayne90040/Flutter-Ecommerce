@@ -1,8 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/constants.dart';
-import 'package:flutter_ecommerce/screen/forgot_password/forgot_password_screen.dart';
 import 'package:flutter_ecommerce/screen/sign_in/sign_form.dart';
 import 'package:flutter_ecommerce/size_config.dart';
 import 'package:flutter_ecommerce/widget/no_account_text.dart';

@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_ecommerce/screen/forgot_password/forgot_password_screen.dart';
+import 'package:flutter_ecommerce/screen/sign_up/sign_up_screen.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
@@ -21,9 +22,7 @@ class NoAccountText extends StatelessWidget {
           style: TextStyle(fontSize: getProportionateScreenWidth(16)),
         ),
         GestureDetector(
-          onTap: () => Navigator.popAndPushNamed(
-              context,
-              ForgotPasswordScreen.routeName),
+          onTap: () => Navigator.pushNamed(context, SignUpScreen.routeName),
           child: Text(
             "Sign Up",
             style: TextStyle(
