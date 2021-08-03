@@ -24,6 +24,20 @@ final headingStyle = TextStyle(
     height: 1.5
 );
 
+final optInputDecoration = InputDecoration(
+    contentPadding: EdgeInsets.symmetric(
+        vertical: getProportionateScreenWidth(15)
+    ),
+    focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(color: kTextColor)
+    ),
+    enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(color: kTextColor)
+    )
+);
+
 // Form Error
 final RegExp emailValidatorRegExp =
 RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");

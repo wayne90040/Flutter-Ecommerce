@@ -3,7 +3,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/screen/complete_profile/complete_profile_screen.dart';
-import 'package:flutter_ecommerce/screen/sign_up_success_screen/sign_up_success.dart';
 import 'package:flutter_ecommerce/widget/custom_surffix_icon.dart';
 import 'package:flutter_ecommerce/widget/default_button.dart';
 import 'package:flutter_ecommerce/widget/form_error.dart';
