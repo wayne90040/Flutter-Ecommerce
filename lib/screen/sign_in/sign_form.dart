@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/screen/forgot_password/forgot_password_screen.dart';
+import 'package:flutter_ecommerce/screen/home/home_screen.dart';
 import 'package:flutter_ecommerce/screen/login_success/login_success_screen.dart';
 import 'package:flutter_ecommerce/widget/custom_surffix_icon.dart';
 import 'package:flutter_ecommerce/widget/default_button.dart';
@@ -65,7 +66,9 @@ class _SignFormState extends State<SignForm> {
               if (_formKey.currentState != null && _formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 // 註冊成功，成功登入
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                Navigator.of(context).pushNamedAndRemoveUntil(LoginSuccessScreen.routeName,
+                        (Route<dynamic> route) => false
+                );
               }
             },
           )
@@ -96,12 +99,14 @@ class _SignFormState extends State<SignForm> {
           setState(() {
             errors.add(kEmailNullError);
           });
+          return "";
         } else if ((value ?? "").length < 8 && !errors.contains(kShortPassError)) {
           setState(() {
             errors.add(kShortPassError);
           });
+          return "";
         }
-        return "";
+        return null;
       },
       decoration: InputDecoration(
           labelText: "Password",
@@ -135,12 +140,14 @@ class _SignFormState extends State<SignForm> {
           setState(() {
             errors.add(kEmailNullError);
           });
+          return "";
         } else if (!emailValidatorRegExp.hasMatch(value ?? "") && !errors.contains(kInvalidEmailError) ) {
           setState(() {
             errors.add(kInvalidEmailError);
           });
+          return "";
         }
-        return "";
+        return null;
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
