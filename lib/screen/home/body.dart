@@ -7,6 +7,7 @@ import 'package:flutter_ecommerce/screen/home/product_card.dart';
 import 'package:flutter_ecommerce/screen/home/search_bar.dart';
 import 'package:flutter_ecommerce/screen/home/section_title.dart';
 import 'package:flutter_ecommerce/screen/home/special_offer_card.dart';
+import 'package:flutter_ecommerce/screen/product_detail/product_detail_screen.dart';
 import 'package:flutter_ecommerce/size_config.dart';
 
 import 'categories.dart';
@@ -101,7 +102,16 @@ class Body extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    ...List.generate(demoProducts.length, (index) => ProductCard(product: demoProducts[index]))
+                    ...List.generate(
+                        demoProducts.length,
+                        (index) {
+                          return ProductCard(product: demoProducts[index], onTapped: () {
+                            Navigator.pushNamed(
+                                context, ProductDetailScreen.routeName,
+                                arguments: demoProducts[index]);
+                          });
+                        }
+                    )
                   ],
                 ),
               ),

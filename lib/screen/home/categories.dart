@@ -2,7 +2,6 @@
 
 import 'package:flutter/cupertino.dart';
 
-import 'body.dart';
 import 'category_card.dart';
 
 class Categories extends StatelessWidget {
