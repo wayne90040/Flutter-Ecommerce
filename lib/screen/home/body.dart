@@ -108,7 +108,7 @@ class Body extends StatelessWidget {
                           return ProductCard(product: demoProducts[index], onTapped: () {
                             Navigator.pushNamed(
                                 context, ProductDetailScreen.routeName,
-                                arguments: demoProducts[index]);
+                                arguments: ProductDetailArguments(product: demoProducts[index]));
                           });
                         }
                     )

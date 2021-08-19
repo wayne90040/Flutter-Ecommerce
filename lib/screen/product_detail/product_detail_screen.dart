@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/models/product.dart';
-
+import 'package:flutter_ecommerce/screen/product_detail/body.dart';
 import 'custom_app_bar.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -10,10 +10,13 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProductDetailArguments arguments = ModalRoute.of(context)!.settings.arguments as ProductDetailArguments;
+
     // TODO: implement build
     return Scaffold(
-      backgroundColor: Color(0xfff5f6f9),
-      appBar: CustomAppBar(rating: 4.5),
+      backgroundColor: Color(0xFFF5F6F9),
+      appBar: CustomAppBar(rating: arguments.product.rating),
+      body: Body(product: arguments.product),
 
     );
   }
