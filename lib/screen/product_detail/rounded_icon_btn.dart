@@ -24,10 +24,8 @@ class RoundedIconBtn extends StatelessWidget {
         padding: EdgeInsets.zero,
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        child: Icon(Icons.arrow_back_ios),
+        onPressed: onTapped,
+        child: Icon(iconData),
       ),
     );
   }

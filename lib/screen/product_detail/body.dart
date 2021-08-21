@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/constants.dart';
 import 'package:flutter_ecommerce/models/product.dart';
 import 'package:flutter_ecommerce/screen/product_detail/product_image.dart';
+import 'package:flutter_ecommerce/screen/product_detail/rounded_icon_btn.dart';
 import 'package:flutter_ecommerce/size_config.dart';
+import 'package:flutter_ecommerce/widget/default_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'color_dots.dart';
 
 class Body extends StatelessWidget {
 
@@ -80,7 +84,7 @@ class Body extends StatelessWidget {
                 ),
                 child: GestureDetector(
                   onTap: () {
-
+                    print("Did Tapped See More");
                   },
                   child: Row(
                     children: [
@@ -93,10 +97,51 @@ class Body extends StatelessWidget {
                     ]
                   ),
                 ),
-              )
-
-
+              ),
             ],
+          ),
+        ),
+
+        SizedBox(height: getProportionateScreenHeight(20)),
+
+        // TODO: Color Choose & Add Remove Icon
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          child: Row(
+            children: [
+              ColorDots(product: product),
+              Spacer(),
+              RoundedIconBtn(
+                iconData: Icons.remove,
+                onTapped: () {
+                  print("-");
+                },
+              ),
+              RoundedIconBtn(
+                iconData: Icons.add,
+                onTapped: () {
+                  print("+");
+                }
+              )
+            ]
+          )
+        ),
+
+        // TODO: Add to Cart Button
+        Padding(
+          padding: EdgeInsets.only(
+            left: SizeConfig.screenWidth * 0.15,
+            right: SizeConfig.screenWidth * 0.15, 
+            top: getProportionateScreenWidth(40),
+            bottom: getProportionateScreenWidth(40)
+          ),
+          child: Container(
+            child: DefaultButton(
+              text: "Add to Cart",
+              onTapped: () {
+                print("Add to Cart");
+              }
+            ),
           ),
         )
       ]
