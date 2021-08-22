@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_ecommerce/screen/cart/cart_screen.dart';
 import 'package:flutter_ecommerce/screen/complete_profile/complete_profile_screen.dart';
 import 'package:flutter_ecommerce/screen/forgot_password/forgot_password_screen.dart';
 import 'package:flutter_ecommerce/screen/home/home_screen.dart';
@@ -22,4 +23,5 @@ final Map<String, WidgetBuilder> routes = {
   OtpScreen.routeName: (context) => OtpScreen(),
   HomeScreen.routeName: (context) => HomeScreen(),
   ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
+  CartScreen.routeName: (context) => CartScreen()
 };

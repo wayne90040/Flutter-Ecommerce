@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/models/demo_product.dart';
+import 'package:flutter_ecommerce/screen/cart/cart_screen.dart';
 import 'package:flutter_ecommerce/screen/home/product_card.dart';
 import 'package:flutter_ecommerce/screen/home/search_bar.dart';
 import 'package:flutter_ecommerce/screen/home/section_title.dart';
@@ -36,7 +37,7 @@ class Body extends StatelessWidget {
                     svgSrc: "assets/icons/Cart Icon.svg",
                     numOfItems: 0,
                     onTapped: () {
-                      print("didTappedCart");
+                      Navigator.pushNamed(context, CartScreen.routeName);
                     }
                   ),
                   IconBtnWithNum(
