@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/constants.dart';
 import 'package:flutter_ecommerce/screen/sign_up/sign_up_form.dart';
 import 'package:flutter_ecommerce/size_config.dart';
+import 'package:flutter_ecommerce/viewmodels/sign_up_view_model.dart';
 import 'package:flutter_ecommerce/widget/social_card.dart';
+import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
 
