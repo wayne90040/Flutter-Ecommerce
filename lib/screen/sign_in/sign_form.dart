@@ -2,11 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/screen/forgot_password/forgot_password_screen.dart';
-import 'package:flutter_ecommerce/screen/home/home_screen.dart';
 import 'package:flutter_ecommerce/screen/login_success/login_success_screen.dart';
+import 'package:flutter_ecommerce/viewmodels/sign_in_view_model.dart';
 import 'package:flutter_ecommerce/widget/custom_surffix_icon.dart';
 import 'package:flutter_ecommerce/widget/default_button.dart';
 import 'package:flutter_ecommerce/widget/form_error.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
@@ -25,16 +26,18 @@ class _SignFormState extends State<SignForm> {
 
   @override
   Widget build(BuildContext context) {
+    var viewModel = Provider.of<SignInViewModel>(context);
+
     // TODO: implement build
     return Form(
       key: _formKey,
       child: Column(
         children: [
-          buildEmailTextField(),
+          _buildEmailTextField(),
           SizedBox(height: getProportionateScreenHeight(20)),
-          buildPasswordTextField(),
+          _buildPasswordTextField(),
           SizedBox(height: getProportionateScreenHeight(20)),
-          FormError(errors: errors),
+          FormError(errors: viewModel.errors),
           SizedBox(height: getProportionateScreenHeight(20)),
           Row(
             children: [
@@ -63,13 +66,13 @@ class _SignFormState extends State<SignForm> {
           DefaultButton(
             text: "Continue",
             onTapped: () {
-              if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                // 註冊成功，成功登入
-                Navigator.of(context).pushNamedAndRemoveUntil(LoginSuccessScreen.routeName,
-                        (Route<dynamic> route) => false
-                );
-              }
+              _formKey.currentState!.save();
+              viewModel.signInWithFirebaseEmail(email: email, password: password).then((result) {
+                if (result) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(LoginSuccessScreen.routeName,
+                          (Route<dynamic> route) => false);
+                }
+              });
             },
           )
         ],
@@ -78,36 +81,10 @@ class _SignFormState extends State<SignForm> {
   }
 
   // TODO: Password Text
-  TextFormField buildPasswordTextField() {
+  TextFormField _buildPasswordTextField() {
     return TextFormField(
       onSaved: (value) => password = value ?? "",
       obscureText: true,
-      onChanged: (value) {
-        if ((value).isNotEmpty && errors.contains(kPassNullError)) {
-          setState(() {
-            errors.remove(kEmailNullError);
-          });
-        } else if (value.length > 8 && errors.contains(kShortPassError)) {
-          setState(() {
-            errors.remove(kShortPassError);
-          });
-        }
-      },
-      validator: (value) {
-        // 不能有重複的 Error
-        if ((value ?? "").isEmpty && !errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.add(kEmailNullError);
-          });
-          return "";
-        } else if ((value ?? "").length < 8 && !errors.contains(kShortPassError)) {
-          setState(() {
-            errors.add(kShortPassError);
-          });
-          return "";
-        }
-        return null;
-      },
       decoration: InputDecoration(
           labelText: "Password",
           hintText: "Enter your password",
@@ -119,36 +96,9 @@ class _SignFormState extends State<SignForm> {
   }
 
   // TODO: Email Text
-  TextFormField buildEmailTextField() {
+  TextFormField _buildEmailTextField() {
     return TextFormField(
       onSaved: (value) => email = value ?? "",
-
-      onChanged: (value) {
-        if ((value).isNotEmpty && errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.remove(kEmailNullError);
-          });
-        } else if (emailValidatorRegExp.hasMatch(value) && errors.contains(kInvalidEmailError)) {
-          setState(() {
-            errors.remove(kInvalidEmailError);
-          });
-        }
-      },
-      validator: (value) {
-        // 不能有重複的 Error
-        if ((value ?? "").isEmpty && !errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.add(kEmailNullError);
-          });
-          return "";
-        } else if (!emailValidatorRegExp.hasMatch(value ?? "") && !errors.contains(kInvalidEmailError) ) {
-          setState(() {
-            errors.add(kInvalidEmailError);
-          });
-          return "";
-        }
-        return null;
-      },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
           labelText: "Email",
