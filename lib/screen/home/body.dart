@@ -10,6 +10,8 @@ import 'package:flutter_ecommerce/screen/home/section_title.dart';
 import 'package:flutter_ecommerce/screen/home/special_offer_card.dart';
 import 'package:flutter_ecommerce/screen/product_detail/product_detail_screen.dart';
 import 'package:flutter_ecommerce/size_config.dart';
+import 'package:flutter_ecommerce/viewmodels/home_view_model.dart';
+import 'package:provider/provider.dart';
 
 import 'categories.dart';
 import 'discount_banner.dart';
@@ -18,6 +20,9 @@ import 'icon_btn_with_num.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var viewModel = Provider.of<HomeViewModel>(context);
+    viewModel.getTopBannerInFirebase();
+
     // TODO: implement build
     return SafeArea(
       child: SingleChildScrollView(
@@ -64,6 +69,7 @@ class Body extends StatelessWidget {
                 print("Special for you See More");
               }),
               SizedBox(height: getProportionateScreenHeight(15)),
+
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(

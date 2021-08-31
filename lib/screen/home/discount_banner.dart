@@ -2,6 +2,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/models/home_banner_model.dart';
+import 'package:flutter_ecommerce/viewmodels/home_view_model.dart';
+import 'package:provider/provider.dart';
 
 import '../../size_config.dart';
 
@@ -12,28 +15,50 @@ class DiscountBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: getProportionateScreenWidth(20),
-        vertical: getProportionateScreenWidth(15)
-      ),
-      width: double.infinity,
-      height: 90,
-      decoration: BoxDecoration(
-        color: Color(0xFF4A3298),
-        borderRadius: BorderRadius.circular(20)
-      ),
-      child: Text.rich(
-        TextSpan(
-          text: "A Summer Surpise\n",
-          style: TextStyle(color: Colors.white),
-          children: [
-            TextSpan(
-                text: "Cashback 20%",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
-            )
-          ]
-        )
+    var viewModel = Provider.of<HomeViewModel>(context);
+    viewModel.getTopBannerInFirebase();
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          ...List.generate(viewModel.homeBanner.discountBanners.length, (index) {
+            DiscountBannerModel model = viewModel.homeBanner.discountBanners[index];
+
+            return Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: GestureDetector(
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(20),
+                    vertical: getProportionateScreenWidth(15)
+                  ),
+                  height: 90,
+                  width: MediaQuery.of(context).size.width - 60,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF4A3298),
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Text.rich(
+                    TextSpan(
+                      text: "${model.title}\n",
+                      style: TextStyle(color: Colors.white),
+                      children: [
+                        TextSpan(
+                            text: model.value,
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
+                        )
+                      ]
+                    )
+                  ),
+                ),
+                onTap: () {
+                  print("${model.title})}");
+                },
+              ),
+            );
+          })
+        ],
       ),
     );
   }
