@@ -47,13 +47,17 @@ class DiscountBannerModel {
 }
 
 class TopBannerModel {
+  final String category;
+  final String numOfBrand;
   final String clickThrough;
   final String imageUrl;
   
-  TopBannerModel({required this.clickThrough, required this.imageUrl});
+  TopBannerModel({required this.category, required this.numOfBrand, required this.clickThrough, required this.imageUrl});
   
   factory TopBannerModel.fromJson(Map<String, dynamic> json) {
     return TopBannerModel(
+        category: json['category'] ?? "",
+        numOfBrand: json['numOfBrand'] ?? "",
         clickThrough: json['clickThrough'] ?? "",
         imageUrl: json['imageUrl'] ?? "");
   }

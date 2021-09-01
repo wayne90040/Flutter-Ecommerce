@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("BuildHome");
     // TODO: implement build
     return ChangeNotifierProvider(
       create: (BuildContext context) {

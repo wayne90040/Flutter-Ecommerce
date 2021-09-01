@@ -9,7 +9,7 @@ class SpecialOfferCard extends StatelessWidget {
 
   final String category;
   final String imageSrc;
-  final int numOfBrands;
+  final String numOfBrands;
   final GestureTapCallback onTapped;
 
   const SpecialOfferCard({

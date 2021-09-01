@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/models/demo_product.dart';
+import 'package:flutter_ecommerce/models/home_banner_model.dart';
 import 'package:flutter_ecommerce/screen/cart/cart_screen.dart';
 import 'package:flutter_ecommerce/screen/home/product_card.dart';
 import 'package:flutter_ecommerce/screen/home/search_bar.dart';
@@ -18,11 +19,13 @@ import 'discount_banner.dart';
 import 'icon_btn_with_num.dart';
 
 class Body extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    var viewModel = Provider.of<HomeViewModel>(context);
-    viewModel.getTopBannerInFirebase();
-
+    var viewModel = Provider.of<HomeViewModel>(context, listen: true);
+    print("Body build");
+    // viewModel.getHomeBannerInFirebase();
+    viewModel.getTopBannerImageInFirebase("TopBanner_1.png");
     // TODO: implement build
     return SafeArea(
       child: SingleChildScrollView(
@@ -70,34 +73,7 @@ class Body extends StatelessWidget {
               }),
               SizedBox(height: getProportionateScreenHeight(15)),
 
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    SpecialOfferCard(
-                      category: "Smart phone",
-                      imageSrc: "assets/images/Image Banner 2.png",
-                      numOfBrands: 18,
-                      onTapped: () {
-                      },
-                    ),
-                    SpecialOfferCard(
-                      category: "Fashion",
-                      imageSrc: "assets/images/Image Banner 3.png",
-                      numOfBrands: 24,
-                      onTapped: () {
-                      },
-                    ),
-                    SpecialOfferCard(
-                      category: "Smart phone",
-                      imageSrc: "assets/images/Image Banner 2.png",
-                      numOfBrands: 24,
-                      onTapped: () {
-                      },
-                    ),
-                  ],
-                ),
-              ),
+              CategoriesWidget(models: viewModel.homeBanner.topBanners),
               SizedBox(height: getProportionateScreenHeight(20)),
 
               // TODO: Popular Product
@@ -126,6 +102,38 @@ class Body extends StatelessWidget {
           ),
         ),
       )
+    );
+  }
+}
+
+class CategoriesWidget extends StatelessWidget {
+
+  final List<TopBannerModel> models;
+
+  const CategoriesWidget({
+    Key? key, required this.models,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          ...List.generate(models.length, (index) {
+            TopBannerModel model = models[index];
+            return SpecialOfferCard(
+              category: model.category,
+              imageSrc: "assets/images/Image Banner 2.png",
+              numOfBrands: model.numOfBrand,
+              onTapped: () {
+
+              }
+            );
+          }),
+        ],
+      ),
     );
   }
 }
