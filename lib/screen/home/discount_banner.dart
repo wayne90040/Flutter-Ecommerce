@@ -15,8 +15,7 @@ class DiscountBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var viewModel = Provider.of<HomeViewModel>(context, listen: false);
-    // viewModel.getHomeBannerInFirebase();
+    var viewModel = Provider.of<HomeViewModel>(context);
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,

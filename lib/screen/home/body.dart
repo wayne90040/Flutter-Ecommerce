@@ -18,14 +18,25 @@ import 'categories.dart';
 import 'discount_banner.dart';
 import 'icon_btn_with_num.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+
+  @override void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<HomeViewModel>(context, listen: false).getHomeBannerInFirebase();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var viewModel = Provider.of<HomeViewModel>(context, listen: true);
-    print("Body build");
-    // viewModel.getHomeBannerInFirebase();
-    viewModel.getTopBannerImageInFirebase("TopBanner_1.png");
+    var viewModel = Provider.of<HomeViewModel>(context);
+    print("Body Build");
+
     // TODO: implement build
     return SafeArea(
       child: SingleChildScrollView(

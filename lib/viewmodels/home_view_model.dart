@@ -10,7 +10,7 @@ class HomeViewModel extends ChangeNotifier {
   HomeBannerModel get homeBanner => _homeBanner;
   void getHomeBannerInFirebase() {
 
-    // print("getHomeBannerInFirebase");
+    print("getHomeBannerInFirebase");
     FirebaseFirestore.instance.collection('home_page').doc('banners').get().then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         Map<String, dynamic>? jsonData;
