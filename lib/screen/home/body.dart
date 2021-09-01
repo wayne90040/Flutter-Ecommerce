@@ -35,7 +35,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     var viewModel = Provider.of<HomeViewModel>(context);
-    print("Body Build");
+    // viewModel.getHomeBannerInFirebase();
 
     // TODO: implement build
     return SafeArea(
@@ -136,7 +136,7 @@ class CategoriesWidget extends StatelessWidget {
             TopBannerModel model = models[index];
             return SpecialOfferCard(
               category: model.category,
-              imageSrc: "assets/images/Image Banner 2.png",
+              imageSrc: "https://firebasestorage.googleapis.com/v0/b/flutter-ecommerce-b7832.appspot.com/o/TopBanner_1.png?alt=media&token=95d0b42b-4862-41d6-96ac-9e04e4667fc8",
               numOfBrands: model.numOfBrand,
               onTapped: () {
 

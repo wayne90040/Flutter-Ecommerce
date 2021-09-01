@@ -1,6 +1,8 @@
 
 import 'dart:convert';
 
+import 'package:flutter_ecommerce/constants.dart';
+
 
 class HomeBannerModel {
 
@@ -50,7 +52,7 @@ class TopBannerModel {
   final String category;
   final String numOfBrand;
   final String clickThrough;
-  final String imageUrl;
+  late String imageUrl;
   
   TopBannerModel({required this.category, required this.numOfBrand, required this.clickThrough, required this.imageUrl});
   
@@ -58,7 +60,7 @@ class TopBannerModel {
     return TopBannerModel(
         category: json['category'] ?? "",
         numOfBrand: json['numOfBrand'] ?? "",
-        clickThrough: json['clickThrough'] ?? "",
+        clickThrough: "$fStorageUrlFirst${json['clickThrough'] ?? ""}$fStorageUrlSecond",
         imageUrl: json['imageUrl'] ?? "");
   }
 }
