@@ -4,13 +4,13 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../size_config.dart';
 
-class CategoryCard extends StatelessWidget {
+class LandingIconWidget extends StatelessWidget {
 
   final String iconSrc;
   final String iconText;
   final GestureTapCallback onTapped;
 
-  const CategoryCard({
+  const LandingIconWidget({
     Key? key,
     required this.iconSrc,
     required this.iconText,

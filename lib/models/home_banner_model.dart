@@ -1,9 +1,7 @@
 
 import 'dart:convert';
 
-import 'package:flutter_ecommerce/constants.dart';
-
-
+// TODO: HomeBannerModel
 class HomeBannerModel {
 
   late List<DiscountBannerModel> discountBanners;
@@ -32,6 +30,8 @@ class HomeBannerModel {
   }
 }
 
+
+// TODO: DiscountBannerModel
 class DiscountBannerModel {
   final String title;
   final String value;
@@ -48,6 +48,8 @@ class DiscountBannerModel {
   }
 }
 
+
+// TODO: TopBannerModel
 class TopBannerModel {
   final String category;
   final String numOfBrand;

@@ -2,12 +2,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_ecommerce/models/landing_model.dart';
 import 'package:flutter_ecommerce/models/home_banner_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
   
   late HomeBannerModel _homeBanner = HomeBannerModel(discountBanners: [], topBanners: []);
   HomeBannerModel get homeBanner => _homeBanner;
+
+  late List<LandingModel> _landings = [LandingModel(text: "", iconPath: "assets/icons/Flash Icon.svg", clickThrough: "")];
+  List<LandingModel> get landings => _landings;
 
   void getHomeBannerInFirebase() {
     FirebaseFirestore.instance.collection('home_page').doc('banners').get().then((DocumentSnapshot documentSnapshot) {
@@ -27,7 +31,6 @@ class HomeViewModel extends ChangeNotifier {
 
     try {
       String result = await FirebaseStorage.instance.ref(path).getDownloadURL();
-      print("result$result");
       return Future.value(result);
     } on FirebaseException catch (e) {
       print(e.code);
@@ -35,5 +38,16 @@ class HomeViewModel extends ChangeNotifier {
       print(e);
     }
     return Future.value("");
+  }
+
+  void getLandings() {
+    print("getLandings");
+    _landings =  [
+      LandingModel(text: "Flash Deal", iconPath: "assets/icons/Flash Icon.svg", clickThrough: ""),
+      LandingModel(text: "Bill", iconPath: "assets/icons/Bill Icon.svg", clickThrough: ""),
+      LandingModel(text: "Game", iconPath: "assets/icons/Game Icon.svg", clickThrough: ""),
+      LandingModel(text: "Daily Gift", iconPath: "assets/icons/Gift Icon.svg", clickThrough: ""),
+      LandingModel(text: "More", iconPath: "assets/icons/Discover.svg", clickThrough: ""),
+    ];
   }
 }

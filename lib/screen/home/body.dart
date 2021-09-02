@@ -14,7 +14,7 @@ import 'package:flutter_ecommerce/size_config.dart';
 import 'package:flutter_ecommerce/viewmodels/home_view_model.dart';
 import 'package:provider/provider.dart';
 
-import 'categories.dart';
+import 'home_header.dart';
 import 'discount_banner.dart';
 import 'icon_btn_with_num.dart';
 
@@ -30,6 +30,7 @@ class _BodyState extends State<Body> {
     // TODO: implement initState
     super.initState();
     Provider.of<HomeViewModel>(context, listen: false).getHomeBannerInFirebase();
+    Provider.of<HomeViewModel>(context, listen: false).getLandings();
   }
 
   @override
@@ -70,12 +71,12 @@ class _BodyState extends State<Body> {
               ),
               SizedBox(height: getProportionateScreenHeight(20)),
 
-              // TODO: Home Banner
-              DiscountBanner(),
+              // TODO: Headers
+              HomeHeader(models: viewModel.landings),
               SizedBox(height: getProportionateScreenHeight(20)),
 
-              // TODO: Categories
-              Categories(),
+              // TODO: Home Banner
+              DiscountBanner(),
               SizedBox(height: getProportionateScreenHeight(20)),
 
               // TODO: Special of you
