@@ -60,7 +60,7 @@ class TopBannerModel {
     return TopBannerModel(
         category: json['category'] ?? "",
         numOfBrand: json['numOfBrand'] ?? "",
-        clickThrough: "$fStorageUrlFirst${json['clickThrough'] ?? ""}$fStorageUrlSecond",
+        clickThrough: json['clickThrough'] ?? "",
         imageUrl: json['imageUrl'] ?? "");
   }
 }

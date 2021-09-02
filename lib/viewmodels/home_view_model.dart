@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_ecommerce/models/home_banner_model.dart';
 
@@ -21,15 +22,18 @@ class HomeViewModel extends ChangeNotifier {
     });
   }
   
-  // Future<String> getTopBannerImageInFirebase(String path) async {
-  //   try {
-  //     String result = await FirebaseStorage.instance.ref(path).getDownloadURL();
-  //     return Future.value(result);
-  //   } on FirebaseException catch (e) {
-  //     print(e.code);
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  //   return Future.value("");
-  // }
+  Future<String> getTopBannerImageInFirebase(String path) async {
+    print("getTopBannerImageInFirebase");
+
+    try {
+      String result = await FirebaseStorage.instance.ref(path).getDownloadURL();
+      print("result$result");
+      return Future.value(result);
+    } on FirebaseException catch (e) {
+      print(e.code);
+    } catch (e) {
+      print(e);
+    }
+    return Future.value("");
+  }
 }

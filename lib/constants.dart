@@ -1,11 +1,11 @@
 
 import 'dart:ui';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/size_config.dart';
 
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
+
 // 漸層
 const kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,
@@ -14,7 +14,6 @@ const kPrimaryGradientColor = LinearGradient(
 );
 const kSecondaryColor = Color(0xFF979797);
 const kTextColor = Color(0xFF757575);
-
 const kAnimationDuration = Duration(milliseconds: 200);
 
 // TextStyle
@@ -51,8 +50,4 @@ const String kNamelNullError = "Please Enter your name";
 const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kAddressNullError = "Please Enter your address";
 
-// FirebaseStorage
-// https://firebasestorage.googleapis.com/v0/b/flutter-ecommerce-b7832.appspot.com/o/TopBanner_1.png?alt=media&token=95d0b42b-4862-41d6-96ac-9e04e4667fc8
-const String fStorageUrlFirst = "https://firebasestorage.googleapis.com/v0/b/flutter-ecommerce-b7832.appspot.com/o/";
-const String fStorageUrlSecond = "?alt=media&token=95d0b42b-4862-41d6-96ac-9e04e4667fc8";
-
+// Ca

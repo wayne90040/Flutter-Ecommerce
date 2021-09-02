@@ -117,30 +117,71 @@ class _BodyState extends State<Body> {
   }
 }
 
-class CategoriesWidget extends StatelessWidget {
+class CategoriesWidget extends StatefulWidget {
 
   final List<TopBannerModel> models;
-
   const CategoriesWidget({
     Key? key, required this.models,
   }) : super(key: key);
 
   @override
+  _CategoriesWidgetState createState() => _CategoriesWidgetState();
+}
+
+class _CategoriesWidgetState extends State<CategoriesWidget> {
+
+  @override void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    var viewModel = Provider.of<HomeViewModel>(context);
+
+    Future getDownLoadUrl(String path) async {
+      var result = await viewModel.getTopBannerImageInFirebase(path);
+      return result;
+    }
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          ...List.generate(models.length, (index) {
-            TopBannerModel model = models[index];
-            return SpecialOfferCard(
-              category: model.category,
-              imageSrc: "https://firebasestorage.googleapis.com/v0/b/flutter-ecommerce-b7832.appspot.com/o/TopBanner_1.png?alt=media&token=95d0b42b-4862-41d6-96ac-9e04e4667fc8",
-              numOfBrands: model.numOfBrand,
-              onTapped: () {
+          ...List.generate(widget.models.length, (index) {
+            TopBannerModel model = widget.models[index];
 
-              }
+            return FutureBuilder(
+              future: getDownLoadUrl(model.imageUrl),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+
+                switch (snapshot.connectionState) {
+
+                  case ConnectionState.none:
+                    // TODO: Handle this case.
+                    return Container();
+
+                  case ConnectionState.waiting:
+                    // TODO: Handle this case.
+                    return Container();
+
+                  case ConnectionState.active:
+                    // TODO: Handle this case.
+                    return Container();
+
+                  case ConnectionState.done:
+                    // TODO: Handle this case.
+                    return SpecialOfferCard(
+                        category: model.category,
+                        imageSrc: snapshot.data.toString(),
+                        numOfBrands: model.numOfBrand,
+                        onTapped: () {
+
+                        }
+                    );
+                }
+              },
             );
           }),
         ],
