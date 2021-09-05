@@ -2,7 +2,9 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_ecommerce/SharePreferenceManager.dart';
 import 'package:flutter_ecommerce/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInViewModel extends ChangeNotifier {
   List<String> _errors = [];
@@ -29,7 +31,6 @@ class SignInViewModel extends ChangeNotifier {
       return Future.value(false);
     } else {
       _removeError(error: kEmailNullError);
-
     }
 
     if (password.isEmpty) {
@@ -41,6 +42,7 @@ class SignInViewModel extends ChangeNotifier {
 
     try {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      await SharePreferenceManager.set(SharePreferenceKey.email, email);
       return Future.value(true);
     } on FirebaseException catch (e) {
       // return Future.value(false);
