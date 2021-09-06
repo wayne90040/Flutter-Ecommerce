@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/SharePreferenceManager.dart';
+import 'package:flutter_ecommerce/share_preference_manager.dart';
 import 'package:flutter_ecommerce/routes.dart';
 import 'package:flutter_ecommerce/screen/home/home_screen.dart';
 import 'package:flutter_ecommerce/screen/splash/splash_screen.dart';

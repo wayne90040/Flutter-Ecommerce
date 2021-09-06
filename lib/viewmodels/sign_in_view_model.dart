@@ -2,7 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_ecommerce/SharePreferenceManager.dart';
+import 'package:flutter_ecommerce/share_preference_manager.dart';
 import 'package:flutter_ecommerce/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
