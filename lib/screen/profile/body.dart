@@ -3,10 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/screen/profile/profile_image.dart';
 import 'package:flutter_ecommerce/screen/profile/profile_menu.dart';
+import 'package:flutter_ecommerce/screen/sign_in/sign_in_screen.dart';
+import 'package:flutter_ecommerce/viewmodels/profile_menu_view_model.dart';
+import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var viewModel = Provider.of<ProfileMenuViewModel>(context);
+
     // TODO: implement build
     return Column(
       children: [
@@ -44,7 +49,29 @@ class Body extends StatelessWidget {
             icon: "assets/icons/Log out.svg",
             text: "Log out",
             didTapped: () {
-
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Sign Out"),
+                    content: Text("Sign Out of ..."),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            viewModel.signOut();
+                            Navigator.of(context).pushNamedAndRemoveUntil(SignInScreen.routeName, (Route<dynamic> route) => false);
+                          },
+                          child: Text("OK")
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("Cancel"))
+                    ],
+                  );
+                }
+              );
             }
         ),
       ]

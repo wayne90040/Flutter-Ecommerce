@@ -2,11 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/constants.dart';
 import 'package:flutter_ecommerce/enums.dart';
-import 'package:flutter_ecommerce/screen/home/home_screen.dart';
 import 'package:flutter_ecommerce/screen/profile/body.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_ecommerce/viewmodels/profile_menu_view_model.dart';
+import 'package:provider/provider.dart';
 
 import 'custom_bottom_nav_bar.dart';
 
@@ -18,10 +17,15 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(title: Text("Profile")),
-      body: Body(),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
+    return ChangeNotifierProvider(
+      create: (BuildContext context) {
+        return ProfileMenuViewModel();
+      },
+      child: Scaffold(
+        appBar: AppBar(title: Text("Profile")),
+        body: Body(),
+        bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
+      ),
     );
   }
 }

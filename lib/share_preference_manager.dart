@@ -68,10 +68,15 @@ class SharePreferenceManager {
     }
   }
 
-
   // await SharePreferenceManager.get(SharePreferenceKey.email);
   static dynamic get(SharePreferenceKey key) async {
     SharedPreferences _preferences = await SharedPreferences.getInstance();
     return _preferences.get(key.key);
+  }
+
+  // remove all SharedPreferences Data
+  static void removeAll() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.clear();
   }
 }

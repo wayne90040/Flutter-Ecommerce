@@ -3,7 +3,6 @@ import 'package:flutter_ecommerce/share_preference_manager.dart';
 import 'package:flutter_ecommerce/routes.dart';
 import 'package:flutter_ecommerce/screen/home/home_screen.dart';
 import 'package:flutter_ecommerce/screen/splash/splash_screen.dart';
-import 'package:flutter_ecommerce/size_config.dart';
 import 'package:flutter_ecommerce/viewmodels/home_view_model.dart';
 import 'package:flutter_ecommerce/viewmodels/sign_up_view_model.dart';
 import 'package:flutter_ecommerce/widget/theme.dart';
@@ -16,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  String email = await SharePreferenceManager.get(SharePreferenceKey.email);
+  String email = await SharePreferenceManager.get(SharePreferenceKey.email) ?? "";
 
   // Run App
   runApp(MyApp(email: email,));

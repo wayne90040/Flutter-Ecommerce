@@ -12,6 +12,7 @@ import 'package:flutter_ecommerce/screen/profile/profile_screen.dart';
 import 'package:flutter_ecommerce/screen/sign_in/sign_in_screen.dart';
 import 'package:flutter_ecommerce/screen/sign_up/sign_up_screen.dart';
 import 'package:flutter_ecommerce/screen/splash/splash_screen.dart';
+import 'package:flutter_ecommerce/widget/alert_widget.dart';
 
 
 final Map<String, WidgetBuilder> routes = {
