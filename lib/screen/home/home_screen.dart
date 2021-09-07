@@ -10,9 +10,14 @@ import 'package:provider/provider.dart';
 
 import '../../size_config.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static String routeName = "/home";
 
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -23,8 +28,12 @@ class HomeScreen extends StatelessWidget {
       },
       child: Scaffold(
         body: Body(),
-        bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
+        // bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
