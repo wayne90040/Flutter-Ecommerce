@@ -1,25 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/models/demo_product.dart';
 import 'package:flutter_ecommerce/screen/home/home_screen.dart';
-import 'package:flutter_ecommerce/screen/product_detail/product_detail_screen.dart';
-import 'package:flutter_ecommerce/screen/profile/custom_bottom_nav_bar.dart';
-import 'package:flutter_ecommerce/screen/profile/profile_menu.dart';
 import 'package:flutter_ecommerce/screen/profile/profile_screen.dart';
-import 'package:flutter_ecommerce/viewmodels/home_view_model.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 import '../constants.dart';
-import '../size_config.dart';
-import 'cart/cart_screen.dart';
-import 'home/body.dart';
-import 'home/discount_banner.dart';
-import 'home/home_header.dart';
-import 'home/icon_btn_with_num.dart';
-import 'home/product_card.dart';
-import 'home/search_bar.dart';
-import 'home/section_title.dart';
+
 
 class MainScreen extends StatefulWidget {
   @override

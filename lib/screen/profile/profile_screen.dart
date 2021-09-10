@@ -7,7 +7,6 @@ import 'package:flutter_ecommerce/screen/profile/body.dart';
 import 'package:flutter_ecommerce/viewmodels/profile_menu_view_model.dart';
 import 'package:provider/provider.dart';
 
-import 'custom_bottom_nav_bar.dart';
 
 class ProfileScreen extends StatelessWidget {
 

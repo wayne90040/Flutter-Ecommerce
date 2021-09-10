@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/screen/my_account/my_account_screen.dart';
 import 'package:flutter_ecommerce/screen/profile/profile_image.dart';
 import 'package:flutter_ecommerce/screen/profile/profile_menu.dart';
 import 'package:flutter_ecommerce/screen/sign_in/sign_in_screen.dart';
@@ -21,7 +22,7 @@ class Body extends StatelessWidget {
           icon: "assets/icons/User Icon.svg",
           text: "My Account",
           didTapped: () {
-
+            Navigator.pushNamed(context, MyAccountScreen.routeName);
           }
         ),
         ProfileMenu(
