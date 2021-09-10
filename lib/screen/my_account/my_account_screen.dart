@@ -2,6 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/screen/my_account/body.dart';
+import 'package:flutter_ecommerce/viewmodels/my_account_view_model.dart';
+import 'package:provider/provider.dart';
 
 class MyAccountScreen extends StatelessWidget {
 
@@ -10,11 +12,17 @@ class MyAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("My Account")
+
+    return ChangeNotifierProvider(
+      create: (BuildContext context) {
+        return MyAccountViewModel();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("My Account")
+        ),
+        body: Body(),
       ),
-      body: Body(),
     );
   }
 }

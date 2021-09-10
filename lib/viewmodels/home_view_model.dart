@@ -27,8 +27,6 @@ class HomeViewModel extends ChangeNotifier {
   }
   
   Future<String> getTopBannerImageInFirebase(String path) async {
-    print("getTopBannerImageInFirebase");
-
     try {
       String result = await FirebaseStorage.instance.ref(path).getDownloadURL();
       return Future.value(result);
@@ -41,7 +39,6 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   void getLandings() {
-    print("getLandings");
     _landings =  [
       LandingModel(text: "Flash Deal", iconPath: "assets/icons/Flash Icon.svg", clickThrough: ""),
       LandingModel(text: "Bill", iconPath: "assets/icons/Bill Icon.svg", clickThrough: ""),

@@ -36,7 +36,6 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     var viewModel = Provider.of<HomeViewModel>(context);
-    // viewModel.getHomeBannerInFirebase();
 
     // TODO: implement build
     return SafeArea(

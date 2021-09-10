@@ -2,12 +2,28 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/viewmodels/my_account_view_model.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<MyAccountViewModel>(context, listen: false).getMyAccountInfoInFirebase();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var viewModel = Provider.of<MyAccountViewModel>(context);
+
     // TODO: implement build
     return SingleChildScrollView(
       child: Column(
@@ -59,7 +75,7 @@ class Body extends StatelessWidget {
 
           MyAccountCell(
             title: "名稱",
-            value: "Wayne",
+            value: viewModel.myAccount?.name ?? "",
             didTapped: () {
               print("Name");
             }
@@ -67,7 +83,7 @@ class Body extends StatelessWidget {
 
           MyAccountCell(
             title: "使用者帳號",
-            value: "wayne90040",
+            value: viewModel.myAccount?.email ?? "",
             didTapped: () {
 
             }
@@ -75,7 +91,7 @@ class Body extends StatelessWidget {
 
           MyAccountCell(
             title: "簡介",
-            value: "",
+            value: viewModel.myAccount?.introduction ?? "",
             didTapped: () {
 
             }
@@ -90,7 +106,7 @@ class Body extends StatelessWidget {
 
           MyAccountCell(
             title: "性別",
-            value: "男",
+            value: viewModel.myAccount?.gender ?? "",
             didTapped: () {
 
             }
@@ -98,7 +114,7 @@ class Body extends StatelessWidget {
 
           MyAccountCell(
             title: "生日",
-            value: "1997-09-05",
+            value: viewModel.myAccount?.birthday ?? "",
             didTapped: () {
 
             }
@@ -106,7 +122,7 @@ class Body extends StatelessWidget {
 
           MyAccountCell(
             title: "手機號碼",
-            value: "0978354921",
+            value: viewModel.myAccount?.phone ?? "",
             didTapped: () {
 
             }
@@ -114,7 +130,7 @@ class Body extends StatelessWidget {
 
           MyAccountCell(
             title: "email",
-            value: "wayne90040@gmail.com",
+            value: viewModel.myAccount?.email ?? "",
             didTapped: () {
 
             }

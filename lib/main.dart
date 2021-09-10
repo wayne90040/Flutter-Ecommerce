@@ -18,7 +18,7 @@ void main() async {
   String email = await SharePreferenceManager.get(SharePreferenceKey.email) ?? "";
 
   // Run App
-  runApp(MyApp(email: email,));
+  runApp(MyApp(email: email));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(email);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
