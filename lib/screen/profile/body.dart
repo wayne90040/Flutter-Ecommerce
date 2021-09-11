@@ -60,7 +60,9 @@ class Body extends StatelessWidget {
                       TextButton(
                           onPressed: () {
                             viewModel.signOut();
-                            Navigator.of(context).pushNamedAndRemoveUntil(SignInScreen.routeName, (Route<dynamic> route) => false);
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                SignInScreen.routeName, (Route<dynamic> route) => false
+                            );
                           },
                           child: Text("OK")
                       ),

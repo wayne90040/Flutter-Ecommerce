@@ -24,6 +24,5 @@ class AlertWidget extends StatelessWidget {
           child: Text("Cancel"))
       ],
     );
-    throw UnimplementedError();
   }
 }

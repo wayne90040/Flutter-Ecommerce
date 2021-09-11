@@ -8,6 +8,7 @@ import 'package:flutter_ecommerce/widget/default_button.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
+import '../../utils.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override
@@ -15,6 +16,8 @@ class CompleteProfileForm extends StatefulWidget {
 }
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
+  DateTime _dateTime = DateTime.now();
+
   final _formKey = GlobalKey<FormState>();
   final List<String> errors = [];
   late String firstName;
@@ -45,90 +48,29 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       key: _formKey,
       child: Column(
         children: [
-          TextFormField(
-            onSaved: (value) => firstName = value ?? "",
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                removeError(error: kNamelNullError);
-              }
-              return null;
-            },
-            validator: (optionValue) {
-              String value = optionValue ?? "";
-              if (value.isEmpty) {
-                addError(error: kNamelNullError);
-                return "";
-              }
-              return null;
-            },
-            decoration: InputDecoration(
-                labelText: "First Name",
-                hintText: "Enter your first name",
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                suffixIcon: CustomSurffix(svgIcon: "assets/icons/User.svg",)
-            ),
-          ),
+
+          _buildAccountTextFormField(),
+
+          SizedBox(height: getProportionateScreenHeight(20)),
+
+          _buildNameTextFormField(),
+          
+          SizedBox(height: getProportionateScreenHeight(20)),
+
+          _buildBirthDayTextFormField(),
+
+          SizedBox(height: getProportionateScreenHeight(20)),
+          
+          _buildGenderTextFormField(),
+          
+          SizedBox(height: getProportionateScreenHeight(20)),
+
+          _buildPhoneTextFormField(),
+
+          SizedBox(height: getProportionateScreenHeight(20)),
+
           SizedBox(height: getProportionateScreenHeight(30)),
-          TextFormField(
-            onSaved: (value) => lastName = value ?? "",
-            decoration: InputDecoration(
-                labelText: "Last Name (option)",
-                hintText: "Enter your last name",
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                suffixIcon: CustomSurffix(svgIcon: "assets/icons/User.svg",)
-            ),
-          ),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          TextFormField(
-            keyboardType: TextInputType.phone,
-            onSaved: (value) => firstName = value ?? "",
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                removeError(error: kPhoneNumberNullError);
-              }
-              return null;
-            },
-            validator: (optionValue) {
-              String value = optionValue ?? "";
-              if (value.isEmpty) {
-                addError(error: kPhoneNumberNullError);
-                return "";
-              }
-              return null;
-            },
-            decoration: InputDecoration(
-                labelText: "Phone Number",
-                hintText: "Enter your phone number",
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                suffixIcon: CustomSurffix(svgIcon: "assets/icons/Phone.svg",)
-            ),
-          ),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          TextFormField(
-            keyboardType: TextInputType.phone,
-            onSaved: (value) => address = value ?? "",
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                removeError(error: kAddressNullError);
-              }
-              return null;
-            },
-            validator: (optionValue) {
-              String value = optionValue ?? "";
-              if (value.isEmpty) {
-                addError(error: kAddressNullError);
-                return "";
-              }
-              return null;
-            },
-            decoration: InputDecoration(
-                labelText: "Address",
-                hintText: "Enter your phone address",
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                suffixIcon: CustomSurffix(svgIcon: "assets/icons/Phone.svg",)
-            ),
-          ),
-          SizedBox(height: getProportionateScreenHeight(40)),
+          
           DefaultButton(
               text: "continue",
               onTapped: () {
@@ -138,6 +80,160 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
               }
           )
         ],
+      ),
+    );
+  }
+
+  TextFormField _buildPhoneTextFormField() {
+    return TextFormField(
+      keyboardType: TextInputType.phone,
+      onSaved: (value) => firstName = value ?? "",
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kPhoneNumberNullError);
+        }
+        return null;
+      },
+      validator: (optionValue) {
+        String value = optionValue ?? "";
+        if (value.isEmpty) {
+          addError(error: kPhoneNumberNullError);
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+          labelText: "Phone Number",
+          hintText: "Enter your phone number",
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: CustomSurffix(svgIcon: "assets/icons/Phone.svg",)
+      ),
+    );
+  }
+
+  TextFormField _buildGenderTextFormField() {
+    return TextFormField(
+      onSaved: (value) => firstName = value ?? "",
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kPhoneNumberNullError);
+        }
+        return null;
+      },
+      validator: (optionValue) {
+        String value = optionValue ?? "";
+        if (value.isEmpty) {
+          addError(error: kPhoneNumberNullError);
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+          labelText: "Gender",
+          hintText: "Enter your Gender",
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: CustomSurffix(svgIcon: "assets/icons/User.svg",)
+      ),
+    );
+  }
+
+  Widget _buildBirthDayTextFormField() {
+
+    return GestureDetector(
+      onTap: () {
+        Utils.showSheet(
+            context: context,
+            child: _buildDatePicker(),
+            onTapped: () {
+              Navigator.pop(context);
+            }
+        );
+      },
+      child: AbsorbPointer(
+        child: TextFormField(
+          onSaved: (value) => firstName = value ?? "",
+          onChanged: (value) {
+            if (value.isNotEmpty) {
+              removeError(error: kPhoneNumberNullError);
+            }
+            return null;
+          },
+          validator: (optionValue) {
+            String value = optionValue ?? "";
+            if (value.isEmpty) {
+              addError(error: kPhoneNumberNullError);
+              return "";
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+              labelText: "Birthday",
+              hintText: "Enter your birthday",
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              suffixIcon: CustomSurffix(svgIcon: "assets/icons/User.svg",)
+          ),
+        ),
+      ),
+    );
+  }
+
+  TextFormField _buildAccountTextFormField() {
+    return TextFormField(
+      onSaved: (value) => lastName = value ?? "",
+      validator: (value) {
+        String strongValue = value ?? "";
+        if (strongValue.isEmpty) {
+          addError(error: kNamelNullError);
+          return "";
+        }
+      },
+      decoration: InputDecoration(
+          labelText: "Account",
+          hintText: "Enter your account",
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: CustomSurffix(svgIcon: "assets/icons/User.svg",)
+      ),
+    );
+  }
+
+  TextFormField _buildNameTextFormField() {
+    return TextFormField(
+      onSaved: (value) => firstName = value ?? "",
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kNamelNullError);
+        }
+        return null;
+      },
+      validator: (optionValue) {
+        String value = optionValue ?? "";
+        if (value.isEmpty) {
+          addError(error: kNamelNullError);
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+          labelText: "Name",
+          hintText: "Enter your name",
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: CustomSurffix(svgIcon: "assets/icons/User.svg",)
+      ),
+    );
+  }
+
+  Widget _buildDatePicker() {
+    return SizedBox(
+      height: 180,
+      child: CupertinoDatePicker(
+        initialDateTime: _dateTime,
+        mode: CupertinoDatePickerMode.date,
+        onDateTimeChanged: (dateTime) {
+          print(dateTime);
+          setState(() {
+            this._dateTime = dateTime;
+          });
+        },
       ),
     );
   }

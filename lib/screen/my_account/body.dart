@@ -45,7 +45,7 @@ class _BodyState extends State<Body> {
                 SizedBox(
                   width: 100,
                   height: 100,
-                  child: CircleAvatar(backgroundImage: AssetImage("assets/images/Profile Image.png"))
+                  child: CircleAvatar(backgroundImage: NetworkImage(viewModel.myAccount?.profileImage ?? ""))
                 ),
 
                 // TODO: Edit Profile Icon
@@ -83,7 +83,7 @@ class _BodyState extends State<Body> {
 
           MyAccountCell(
             title: "使用者帳號",
-            value: viewModel.myAccount?.email ?? "",
+            value: viewModel.myAccount?.account ?? "",
             didTapped: () {
 
             }

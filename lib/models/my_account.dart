@@ -8,6 +8,8 @@ class MyAccount {
   final String birthday;
   final String phone;
   final String introduction;
+  late String profileImage;
+  final String backgroundImage;
 
   MyAccount({
     required this.account,
@@ -16,7 +18,9 @@ class MyAccount {
     required this.gender,
     required this.birthday,
     required this.phone,
-    required this.introduction
+    required this.introduction,
+    required this.profileImage,
+    required this.backgroundImage
   });
 
   factory MyAccount.fromJson(Map<String, dynamic> json) {
@@ -28,7 +32,9 @@ class MyAccount {
         gender: json['gender'] ?? "",
         birthday: json['birthday'] ?? "",
         phone: json['phone'] ?? "",
-        introduction: json['introduction'] ?? ""
+        introduction: json['introduction'] ?? "",
+        profileImage: json['profileImage'] ?? "",
+        backgroundImage: json['backgroundImage'] ?? ""
     );
   }
 }
