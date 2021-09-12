@@ -3,12 +3,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/screen/otp/otp_screen.dart';
+import 'package:flutter_ecommerce/viewmodels/complete_profile_view_model.dart';
 import 'package:flutter_ecommerce/widget/custom_surffix_icon.dart';
 import 'package:flutter_ecommerce/widget/default_button.dart';
-
+import 'package:flutter_ecommerce/widget/form_error.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../../constants.dart';
 import '../../size_config.dart';
 import '../../utils.dart';
+
 
 class CompleteProfileForm extends StatefulWidget {
   @override
@@ -23,7 +27,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   late String name;
   late String account;
   late String phone;
-
   String birthday = "";
   String gender = "";
 
@@ -46,6 +49,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+
+    var viewModel = Provider.of<CompleteProfileViewModel>(context);
+
     return Form(
       key: _formKey,
       child: Column(
@@ -69,14 +75,20 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
           _buildPhoneTextFormField(),
 
+          FormError(errors: errors),
+
           SizedBox(height: getProportionateScreenHeight(30)),
           
           DefaultButton(
               text: "continue",
               onTapped: () {
-                if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-                  Navigator.pushNamed(context, OtpScreen.routeName);
-                }
+                _formKey.currentState!.validate();
+                // _formKey.currentState!.save();
+                // viewModel.completeProfileInFirebase();
+
+                // if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+                //   Navigator.pushNamed(context, OtpScreen.routeName);
+                // }
               }
           )
         ],
@@ -122,7 +134,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       },
       child: AbsorbPointer(
         child: TextFormField(
-
           onSaved: (value) => gender = value ?? "",
           onChanged: (value) {
             if (value.isNotEmpty) {
@@ -153,6 +164,10 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
     return GestureDetector(
       onTap: () {
+        if (FocusManager.instance.primaryFocus != null) {
+          FocusManager.instance.primaryFocus!.unfocus();
+        }
+
         Utils.showSheet(
             context: context,
             child: _buildDatePicker(),
@@ -195,7 +210,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       validator: (value) {
         String strongValue = value ?? "";
         if (strongValue.isEmpty) {
-          addError(error: kNamelNullError);
+          addError(error: kNameNullError);
           return "";
         }
       },
@@ -213,14 +228,14 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       onSaved: (value) => name = value ?? "",
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kNamelNullError);
+          removeError(error: kNameNullError);
         }
         return null;
       },
       validator: (optionValue) {
         String value = optionValue ?? "";
         if (value.isEmpty) {
-          addError(error: kNamelNullError);
+          addError(error: kNameNullError);
           return "";
         }
         return null;
@@ -241,9 +256,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         initialDateTime: DateTime.now(),
         mode: CupertinoDatePickerMode.date,
         onDateTimeChanged: (dateTime) {
-          print(dateTime);
           setState(() {
-            birthday = dateTime.toString();
+            birthday = DateFormat('yyyy-MM-dd').format(dateTime);
           });
         },
       ),
@@ -256,14 +270,18 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     actions: [
       CupertinoActionSheetAction(
         onPressed: () {
-          gender = "male";
+          setState(() {
+            gender = "male";
+          });
           Navigator.pop(context);
         },
         child: Text("male")
       ),
       CupertinoActionSheetAction(
         onPressed: () {
-          gender = "female";
+          setState(() {
+            gender = "female";
+          });
           Navigator.pop(context);
         },
         child: Text("female")
