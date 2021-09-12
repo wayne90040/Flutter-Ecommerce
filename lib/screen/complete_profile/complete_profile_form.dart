@@ -16,14 +16,16 @@ class CompleteProfileForm extends StatefulWidget {
 }
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
-  DateTime _dateTime = DateTime.now();
-
   final _formKey = GlobalKey<FormState>();
+
   final List<String> errors = [];
-  late String firstName;
-  late String lastName;
-  late String phoneNumber;
-  late String address;
+
+  late String name;
+  late String account;
+  late String phone;
+
+  String birthday = "";
+  String gender = "";
 
   void addError({required String error}) {
     if (!errors.contains(error)) {
@@ -67,8 +69,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
           _buildPhoneTextFormField(),
 
-          SizedBox(height: getProportionateScreenHeight(20)),
-
           SizedBox(height: getProportionateScreenHeight(30)),
           
           DefaultButton(
@@ -87,7 +87,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField _buildPhoneTextFormField() {
     return TextFormField(
       keyboardType: TextInputType.phone,
-      onSaved: (value) => firstName = value ?? "",
+      onSaved: (value) => phone = value ?? "",
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPhoneNumberNullError);
@@ -111,28 +111,40 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     );
   }
 
-  TextFormField _buildGenderTextFormField() {
-    return TextFormField(
-      onSaved: (value) => firstName = value ?? "",
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPhoneNumberNullError);
+  Widget _buildGenderTextFormField() {
+
+    return GestureDetector(
+      onTap: () {
+        if (FocusManager.instance.primaryFocus != null) {
+          FocusManager.instance.primaryFocus!.unfocus();
         }
-        return null;
+        showCupertinoModalPopup(context: context, builder: (context) => _buildGenderSheet());
       },
-      validator: (optionValue) {
-        String value = optionValue ?? "";
-        if (value.isEmpty) {
-          addError(error: kPhoneNumberNullError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-          labelText: "Gender",
-          hintText: "Enter your Gender",
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: CustomSurffix(svgIcon: "assets/icons/User.svg",)
+      child: AbsorbPointer(
+        child: TextFormField(
+
+          onSaved: (value) => gender = value ?? "",
+          onChanged: (value) {
+            if (value.isNotEmpty) {
+              removeError(error: kPhoneNumberNullError);
+            }
+            return null;
+          },
+          validator: (optionValue) {
+            String value = optionValue ?? "";
+            if (value.isEmpty) {
+              addError(error: kPhoneNumberNullError);
+              return "";
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+              labelText: "Gender",
+              hintText: gender.isEmpty ? "Enter your Gender" : gender,
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              suffixIcon: CustomSurffix(svgIcon: "assets/icons/User.svg",)
+          ),
+        ),
       ),
     );
   }
@@ -151,7 +163,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       },
       child: AbsorbPointer(
         child: TextFormField(
-          onSaved: (value) => firstName = value ?? "",
+          onSaved: (value) => birthday = value ?? "",
           onChanged: (value) {
             if (value.isNotEmpty) {
               removeError(error: kPhoneNumberNullError);
@@ -168,7 +180,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           },
           decoration: InputDecoration(
               labelText: "Birthday",
-              hintText: "Enter your birthday",
+              hintText: birthday.isEmpty ? "Enter your birthday" : birthday,
               floatingLabelBehavior: FloatingLabelBehavior.always,
               suffixIcon: CustomSurffix(svgIcon: "assets/icons/User.svg",)
           ),
@@ -179,7 +191,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField _buildAccountTextFormField() {
     return TextFormField(
-      onSaved: (value) => lastName = value ?? "",
+      onSaved: (value) => account = value ?? "",
       validator: (value) {
         String strongValue = value ?? "";
         if (strongValue.isEmpty) {
@@ -198,7 +210,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField _buildNameTextFormField() {
     return TextFormField(
-      onSaved: (value) => firstName = value ?? "",
+      onSaved: (value) => name = value ?? "",
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
@@ -226,15 +238,42 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     return SizedBox(
       height: 180,
       child: CupertinoDatePicker(
-        initialDateTime: _dateTime,
+        initialDateTime: DateTime.now(),
         mode: CupertinoDatePickerMode.date,
         onDateTimeChanged: (dateTime) {
           print(dateTime);
           setState(() {
-            this._dateTime = dateTime;
+            birthday = dateTime.toString();
           });
         },
       ),
     );
   }
+
+  CupertinoActionSheet _buildGenderSheet() => CupertinoActionSheet(
+    title: Text("Gender"),
+    message: Text("Select your gender"),
+    actions: [
+      CupertinoActionSheetAction(
+        onPressed: () {
+          gender = "male";
+          Navigator.pop(context);
+        },
+        child: Text("male")
+      ),
+      CupertinoActionSheetAction(
+        onPressed: () {
+          gender = "female";
+          Navigator.pop(context);
+        },
+        child: Text("female")
+      )
+    ],
+    cancelButton: CupertinoActionSheetAction(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      child: Text("Cancel"),
+    ),
+  );
 }

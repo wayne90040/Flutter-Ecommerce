@@ -30,30 +30,30 @@ class _SignUpFormState extends State<SignUpForm> {
     var viewModel = Provider.of<SignUpViewModel>(context);
 
     return Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            _buildEmailTextFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            _buildPasswordTextFormField(),
-            SizedBox(height: getProportionateScreenHeight(30)),
-            _buildConfirmPassTextFormField(),
-            FormError(errors: viewModel.errors),
-            SizedBox(height: getProportionateScreenHeight(40)),
-            DefaultButton(
-              text: "Continue",
-              onTapped: () {
-                _formKey.currentState!.save();
+      key: _formKey,
+      child: Column(
+        children: [
+          _buildEmailTextFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
+          _buildPasswordTextFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
+          _buildConfirmPassTextFormField(),
+          FormError(errors: viewModel.errors),
+          SizedBox(height: getProportionateScreenHeight(40)),
+          DefaultButton(
+            text: "Continue",
+            onTapped: () {
+              _formKey.currentState!.save();
 
-                viewModel.registrationWithEmail(email: email, password: password, confirmPassword: confirmPassword).then((result) {
-                  if (result) {
-                    Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-                  }
-                });
-              }
-            )
-          ],
-        )
+              viewModel.registrationWithEmail(email: email, password: password, confirmPassword: confirmPassword).then((result) {
+                if (result) {
+                  Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                }
+              });
+            }
+          )
+        ],
+      )
     );
   }
 
