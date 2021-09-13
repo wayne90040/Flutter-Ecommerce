@@ -52,5 +52,6 @@ const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kBirthdayNullError = "Please Enter your birthday";
 const String kGenderNullError = "Please Enter your Gender";
 const String kAddressNullError = "Please Enter your address";
-
-// Ca
+const String kPasswordError = "Error Passwords";
+const String kEmailNotExistError = "Email not register";
+const String kTooManyRequest = "Try Too Many, Please wait";

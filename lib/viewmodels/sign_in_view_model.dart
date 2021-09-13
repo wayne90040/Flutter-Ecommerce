@@ -39,14 +39,29 @@ class SignInViewModel extends ChangeNotifier {
       _removeError(error: kPassNullError);
     }
 
+    _removeError(error: kEmailNotExistError);
+    _removeError(error: kPasswordError);
+    _removeError(error: kTooManyRequest);
+
     try {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       await SharePreferenceManager.set(SharePreferenceKey.email, email);
       return Future.value(true);
     } on FirebaseException catch (e) {
-      // return Future.value(false);
+
+      if (e.code == "user-not-found") {
+        _addError(error: kEmailNotExistError);
+      }
+
+      if (e.code == "wrong-password") {
+        _addError(error: kPasswordError);
+      }
+
+      if (e.code == "too-many-requests") {
+        _addError(error: kTooManyRequest);
+      }
+
     } catch (e) {
-      // return Future.value(false);
     }
 
     return Future.value(false);
