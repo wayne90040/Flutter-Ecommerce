@@ -22,10 +22,12 @@ class MyAccountViewModel extends ChangeNotifier {
         Map<String, dynamic>? jsonData = documentSnapshot.data() as Map<String, dynamic>?;
         _myAccount = MyAccount.fromJson(jsonData!);
 
-        FirebaseStorage.instance.ref(_myAccount?.profileImage ?? "").getDownloadURL().then((String url) {
-          _myAccount!.profileImage = url;
-          notifyListeners();
-        });
+        if ((_myAccount?.profileImage ?? "").isNotEmpty) {
+          FirebaseStorage.instance.ref(_myAccount?.profileImage ?? "").getDownloadURL().then((String url) {
+            _myAccount!.profileImage = url;
+            notifyListeners();
+          });
+        }
 
         notifyListeners();
       } else {

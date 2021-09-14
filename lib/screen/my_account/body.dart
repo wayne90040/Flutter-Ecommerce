@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/screen/my_account/my_account_edit_screen.dart';
 import 'package:flutter_ecommerce/viewmodels/my_account_view_model.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -78,6 +79,7 @@ class _BodyState extends State<Body> {
             value: viewModel.myAccount?.name ?? "",
             didTapped: () {
               print("Name");
+              Navigator.pushNamed(context, MyAccountEditScreen.routeName);
             }
           ),
 
@@ -172,11 +174,11 @@ class MyAccountCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: 50,
-
-        child: GestureDetector(
+      child: GestureDetector(
+        onTap: didTapped,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: 50,
           child: Row(
             children: [
               Text(
@@ -199,8 +201,7 @@ class MyAccountCell extends StatelessWidget {
               )
             ],
           ),
-          onTap: didTapped
-        )
+        ),
       ),
     );
   }
