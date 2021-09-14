@@ -2,6 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/screen/home/home_screen.dart';
+import 'package:flutter_ecommerce/screen/main_screen.dart';
 import 'package:flutter_ecommerce/screen/otp/otp_screen.dart';
 import 'package:flutter_ecommerce/viewmodels/complete_profile_view_model.dart';
 import 'package:flutter_ecommerce/widget/custom_surffix_icon.dart';
@@ -90,6 +92,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                 //   Navigator.pushNamed(context, OtpScreen.routeName);
                 // }
               }
+          ),
+          SizedBox(height: 10),
+          MaterialButton(
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(context, MainScreen.routeName, (route) => false);
+            },
+            child: Text("Skip >"),
           )
         ],
       ),

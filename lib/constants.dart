@@ -55,3 +55,4 @@ const String kAddressNullError = "Please Enter your address";
 const String kPasswordError = "Error Passwords";
 const String kEmailNotExistError = "Email not register";
 const String kTooManyRequest = "Try Too Many, Please wait";
+const String kEmailAlreadyInUse = "Email Already Register";

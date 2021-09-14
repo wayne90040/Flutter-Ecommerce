@@ -1,7 +1,11 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/constants.dart';
+import 'package:flutter_ecommerce/share_preference_manager.dart';
 
 class SignUpViewModel extends ChangeNotifier {
 
@@ -26,6 +30,8 @@ class SignUpViewModel extends ChangeNotifier {
     required String email,
     required String password,
     required String confirmPassword }) async {
+
+    _removeError(error: kEmailAlreadyInUse);
     
     if (!_validEmail(email: email)) {
       return Future.value(false);
@@ -36,9 +42,34 @@ class SignUpViewModel extends ChangeNotifier {
     }
 
     try {
+      // Add User in Auth
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      
+      // Add email in FireStore Database
+      CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+      // Set in UserDefault
+      await SharePreferenceManager.set(SharePreferenceKey.email, email);
+
+      await users.doc(email).set(
+          {
+            'account': '',
+            'backgroundImage': '',
+            'birthday': '',
+            'email': email,
+            'gender': '',
+            'introduction': '',
+            'name': '',
+            'phone': '',
+            'profileImage': ''
+          }
+      );
       return Future.value(true);
     } on FirebaseException catch (e) {
+      if (e.code == "email-already-in-use") {
+        _addError(error: kEmailAlreadyInUse);
+      }
+      print(e.code);
       // catch error
     } catch (e) {
       // catch error

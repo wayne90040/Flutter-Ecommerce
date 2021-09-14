@@ -8,11 +8,14 @@ import '../constants.dart';
 
 
 class MainScreen extends StatefulWidget {
+  static String routeName = "/main";
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
+
 
   int _selectedIndex = 0;
 

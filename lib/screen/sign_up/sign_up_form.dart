@@ -38,16 +38,16 @@ class _SignUpFormState extends State<SignUpForm> {
           _buildPasswordTextFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           _buildConfirmPassTextFormField(),
+          SizedBox(height: 10),
           FormError(errors: viewModel.errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Continue",
             onTapped: () {
               _formKey.currentState!.save();
-
               viewModel.registrationWithEmail(email: email, password: password, confirmPassword: confirmPassword).then((result) {
                 if (result) {
-                  Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                  Navigator.pushNamedAndRemoveUntil(context, CompleteProfileScreen.routeName, (route) => false);
                 }
               });
             }
