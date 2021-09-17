@@ -46,7 +46,10 @@ class _BodyState extends State<Body> {
                 SizedBox(
                   width: 100,
                   height: 100,
-                  child: CircleAvatar(backgroundImage: NetworkImage(viewModel.myAccount?.profileImage ?? ""))
+                  child: CircleAvatar(
+                    backgroundImage: (viewModel.myAccount?.profileImage ?? "").isNotEmpty ?
+                      NetworkImage(viewModel.myAccount?.profileImage ?? "") : AssetImage("assets/images/Profile Image.png") as ImageProvider
+                  )
                 ),
 
                 // TODO: Edit Profile Icon

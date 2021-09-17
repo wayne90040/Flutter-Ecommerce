@@ -10,8 +10,6 @@ import '../share_preference_manager.dart';
 class MyAccountViewModel extends ChangeNotifier {
   MyAccount? _myAccount;
   MyAccount? get myAccount => _myAccount;
-
-
   
   void getMyAccountInfoInFirebase() async {
 
