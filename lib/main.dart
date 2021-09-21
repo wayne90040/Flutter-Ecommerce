@@ -4,6 +4,7 @@ import 'package:flutter_ecommerce/share_preference_manager.dart';
 import 'package:flutter_ecommerce/routes.dart';
 import 'package:flutter_ecommerce/screen/splash/splash_screen.dart';
 import 'package:flutter_ecommerce/viewmodels/home_view_model.dart';
+import 'package:flutter_ecommerce/viewmodels/my_account_edit_view_model.dart';
 import 'package:flutter_ecommerce/viewmodels/sign_up_view_model.dart';
 import 'package:flutter_ecommerce/widget/theme.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => SignUpViewModel()),
-          ChangeNotifierProvider(create: (context) => HomeViewModel())
+          ChangeNotifierProvider(create: (context) => HomeViewModel()),
+          ChangeNotifierProvider(create: (context) => MyAccountEditViewModel())
         ],
         child: (email != "" ? MainScreen() : SplashScreen()),
       ),

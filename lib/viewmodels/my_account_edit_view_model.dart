@@ -5,8 +5,8 @@ import 'package:flutter_ecommerce/share_preference_manager.dart';
 class MyAccountEditViewModel extends ChangeNotifier {
 
 
-  void setValueInFirebase({required String value}) {
-    String email = SharePreferenceManager.get(SharePreferenceKey.email);
+  Future<bool> setValueInFirebase({required String value}) async {
+    String email = await SharePreferenceManager.get(SharePreferenceKey.email);
 
     try {
       CollectionReference user = FirebaseFirestore.instance.collection('users');
@@ -16,8 +16,12 @@ class MyAccountEditViewModel extends ChangeNotifier {
             'name': value
           }
       );
+      return Future.value(true);
+
     } on FirebaseException catch (e) {
 
     }
+
+    return Future.value(false);
   }
 }

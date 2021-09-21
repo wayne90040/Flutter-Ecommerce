@@ -2,7 +2,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/screen/my_account/my_account_edit_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_ecommerce/enums.dart';
+import 'package:flutter_ecommerce/screen/my_account_edit/my_account_edit_screen.dart';
 import 'package:flutter_ecommerce/viewmodels/my_account_view_model.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +15,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+
+  late String nameChange = '';
 
   @override
   void initState() {
@@ -81,8 +85,14 @@ class _BodyState extends State<Body> {
             title: "名稱",
             value: viewModel.myAccount?.name ?? "",
             didTapped: () {
-              print("Name");
-              Navigator.pushNamed(context, MyAccountEditScreen.routeName);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      MyAccountEditScreen(() => viewModel.getMyAccountInfoInFirebase(),
+                        type: AccountEditType.name,
+                      ),
+                  )
+              );
             }
           ),
 
@@ -90,7 +100,14 @@ class _BodyState extends State<Body> {
             title: "使用者帳號",
             value: viewModel.myAccount?.account ?? "",
             didTapped: () {
-
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      MyAccountEditScreen(() => viewModel.getMyAccountInfoInFirebase(),
+                        type: AccountEditType.userAccount,
+                      ),
+                  )
+              );
             }
           ),
 
@@ -98,7 +115,14 @@ class _BodyState extends State<Body> {
             title: "簡介",
             value: viewModel.myAccount?.introduction ?? "",
             didTapped: () {
-
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      MyAccountEditScreen(() => viewModel.getMyAccountInfoInFirebase(),
+                        type: AccountEditType.introduction,
+                      ),
+                  )
+              );
             }
           ),
 
@@ -113,7 +137,14 @@ class _BodyState extends State<Body> {
             title: "性別",
             value: viewModel.myAccount?.gender ?? "",
             didTapped: () {
-
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      MyAccountEditScreen(() => viewModel.getMyAccountInfoInFirebase(),
+                        type: AccountEditType.gender,
+                      ),
+                  )
+              );
             }
           ),
 
@@ -121,7 +152,14 @@ class _BodyState extends State<Body> {
             title: "生日",
             value: viewModel.myAccount?.birthday ?? "",
             didTapped: () {
-
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      MyAccountEditScreen(() => viewModel.getMyAccountInfoInFirebase(),
+                        type: AccountEditType.birthday,
+                      ),
+                  )
+              );
             }
           ),
 
@@ -129,7 +167,14 @@ class _BodyState extends State<Body> {
             title: "手機號碼",
             value: viewModel.myAccount?.phone ?? "",
             didTapped: () {
-
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      MyAccountEditScreen(() => viewModel.getMyAccountInfoInFirebase(),
+                        type: AccountEditType.cellphone,
+                      ),
+                  )
+              );
             }
           ),
 
@@ -152,7 +197,14 @@ class _BodyState extends State<Body> {
             title: "密碼變更",
             value: "",
             didTapped: () {
-
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      MyAccountEditScreen(() => viewModel.getMyAccountInfoInFirebase(),
+                        type: AccountEditType.password,
+                      ),
+                  )
+              );
             }
           ),
         ]
