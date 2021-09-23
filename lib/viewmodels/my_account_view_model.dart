@@ -8,6 +8,7 @@ import 'package:flutter_ecommerce/models/my_account.dart';
 import '../share_preference_manager.dart';
 
 class MyAccountViewModel extends ChangeNotifier {
+
   MyAccount? _myAccount;
   MyAccount? get myAccount => _myAccount;
   
@@ -32,5 +33,40 @@ class MyAccountViewModel extends ChangeNotifier {
         print('failed');
       }
     });
+  }
+
+  void setGenderInFirebase({required String value}) async {
+
+    String email = await SharePreferenceManager.get(SharePreferenceKey.email);
+
+    try {
+      CollectionReference user = FirebaseFirestore.instance.collection('users');
+
+      user.doc(email).update(
+        {
+          'gender': value
+        }
+      );
+      getMyAccountInfoInFirebase(); // reload
+    } on FirebaseException catch (e) {
+      print(e.code);
+    }
+  }
+
+  void setBirthdayInFirebase({required String value}) async{
+    String email = await SharePreferenceManager.get(SharePreferenceKey.email);
+
+    try {
+      CollectionReference user = FirebaseFirestore.instance.collection('users');
+
+      user.doc(email).update(
+        {
+          'birthday': value
+        }
+      );
+      getMyAccountInfoInFirebase(); // reload
+    } on FirebaseException catch (e) {
+      print(e.code);
+    }
   }
 }

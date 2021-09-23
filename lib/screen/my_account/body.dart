@@ -2,12 +2,12 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_ecommerce/enums.dart';
 import 'package:flutter_ecommerce/screen/my_account_edit/my_account_edit_screen.dart';
 import 'package:flutter_ecommerce/viewmodels/my_account_view_model.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -133,18 +133,27 @@ class _BodyState extends State<Body> {
             ),
           ),
 
+
           MyAccountCell(
             title: "性別",
             value: viewModel.myAccount?.gender ?? "",
             didTapped: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>
-                      MyAccountEditScreen(() => viewModel.getMyAccountInfoInFirebase(),
-                        type: AccountEditType.gender,
-                      ),
-                  )
-              );
+
+              showCupertinoModalPopup(context: context, builder: (context) {
+                return GenderSheetWidget(
+                  didTappedFemale: () {
+                    viewModel.setGenderInFirebase(value: 'female');
+                    Navigator.pop(context);
+                  },
+                  didTappedMale: () {
+                    viewModel.setGenderInFirebase(value: 'male');
+                    Navigator.pop(context);
+                  },
+                  didTappedCancel: () {
+                    Navigator.pop(context);
+                  }
+                );
+              });
             }
           ),
 
@@ -152,14 +161,11 @@ class _BodyState extends State<Body> {
             title: "生日",
             value: viewModel.myAccount?.birthday ?? "",
             didTapped: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>
-                      MyAccountEditScreen(() => viewModel.getMyAccountInfoInFirebase(),
-                        type: AccountEditType.birthday,
-                      ),
-                  )
-              );
+              showCupertinoModalPopup(context: context, builder: (context) {
+                return DatePickerWidget((date) {
+                  viewModel.setBirthdayInFirebase(value: date);
+                });
+              });
             }
           ),
 
@@ -211,6 +217,79 @@ class _BodyState extends State<Body> {
       ),
     );
   }
+}
+
+class DatePickerWidget extends StatefulWidget {
+
+  void Function(String) callback;
+  DatePickerWidget(this.callback);
+
+  @override
+  _DatePickerWidgetState createState() => _DatePickerWidgetState();
+}
+
+class _DatePickerWidgetState extends State<DatePickerWidget> {
+
+  @override
+  Widget build(BuildContext context) {
+
+    String birthday = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+    return CupertinoActionSheet(
+      actions: [
+        SizedBox(
+          height: 180,
+          child: CupertinoDatePicker(
+            initialDateTime: DateTime.now(),
+            mode: CupertinoDatePickerMode.date,
+            onDateTimeChanged: (dateTime) {
+              birthday = DateFormat('yyyy-MM-dd').format(dateTime);
+            },
+          ),
+        )
+      ],
+      cancelButton: CupertinoActionSheetAction(
+        child: Text('Done'),
+        onPressed: () {
+          widget.callback(birthday);
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+}
+
+class GenderSheetWidget extends StatelessWidget {
+  const GenderSheetWidget({
+    Key? key,
+    required this.didTappedMale,
+    required this.didTappedFemale,
+    required this.didTappedCancel
+  }) : super(key: key);
+
+  final GestureTapCallback didTappedMale;
+  final GestureTapCallback didTappedFemale;
+  final GestureTapCallback didTappedCancel;
+
+  @override
+  Widget build(BuildContext context) => CupertinoActionSheet(
+    title: Text('Gender'),
+    message: Text('Select your gender'),
+    actions: [
+      CupertinoActionSheetAction(
+          onPressed: didTappedMale,
+          child: Text('male')
+      ),
+      CupertinoActionSheetAction(
+          onPressed: didTappedFemale,
+          child: Text('female')
+      ),
+      CupertinoActionSheetAction(
+          onPressed: didTappedCancel,
+          child: Text('cancel')
+      )
+    ],
+  );
 }
 
 class MyAccountCell extends StatelessWidget {

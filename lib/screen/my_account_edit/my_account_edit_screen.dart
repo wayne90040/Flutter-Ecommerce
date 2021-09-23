@@ -11,9 +11,10 @@ typedef VoidCallback = void Function();
 class MyAccountEditScreen extends StatefulWidget {
 
   // Ref: https://medium.com/flutterdevs/working-with-callback-in-flutter-89dc207cba37
+  AccountEditType type;
   VoidCallback callback;
   MyAccountEditScreen(this.callback, {required this.type});
-  AccountEditType type;
+
 
   @override
   _MyAccountEditScreenState createState() => _MyAccountEditScreenState(type: type);
@@ -62,7 +63,6 @@ class _MyAccountEditScreenState extends State<MyAccountEditScreen> {
 
   _MyAccountEditScreenState({required this.type});
 
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -79,7 +79,7 @@ class _MyAccountEditScreenState extends State<MyAccountEditScreen> {
             IconButton(
               onPressed: () {
                 var viewModel = MyAccountEditViewModel();
-                viewModel.setValueInFirebase(value: changeValue).then(
+                viewModel.setValueInFirebase(type: type, value: changeValue).then(
                         (success) {
                           if (success) {
                             widget.callback();
