@@ -40,7 +40,6 @@ dependencies:
   cloud_firestore: ^2.5.1
   firebase_messaging: ^10.0.7
 
-
   # Save Data
   shared_preferences: ^2.0.7
 

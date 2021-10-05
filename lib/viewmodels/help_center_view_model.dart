@@ -10,7 +10,6 @@ class HelpCenterViewModel extends ChangeNotifier {
   HelpCentersModel get helpCenterModel => _helpCenterModel;
   
   void getHelpCenterModelInFirebase() {
-    print('do getHelpCenterModelInFirebase');
     FirebaseFirestore.instance.collection('menu').doc('help_center').get().then((DocumentSnapshot documentSnap) {
       if (documentSnap.exists) {
         Map<String, dynamic>? json = documentSnap.data() as Map<String, dynamic>?;
