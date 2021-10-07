@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/screen/home/home_screen.dart';
+import 'package:flutter_ecommerce/screen/main_screen.dart';
 import 'package:flutter_ecommerce/widget/default_button.dart';
 
 import '../../size_config.dart';
@@ -38,7 +39,8 @@ class LoginSuccessScreen extends StatelessWidget {
             child: DefaultButton(
               text: "Back to home",
               onTapped: () {
-                Navigator.pushNamed(context, HomeScreen.routeName);
+
+                Navigator.pushNamed(context, MainScreen.routeName);
               },
             ),
           ),
