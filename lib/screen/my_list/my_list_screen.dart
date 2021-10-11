@@ -2,18 +2,26 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/screen/my_list/body.dart';
+import 'package:flutter_ecommerce/viewmodels/my_list_view_model.dart';
+import 'package:provider/provider.dart';
 
 class MyListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("MyList"),
-        elevation: 3,
+    return ChangeNotifierProvider(
+      create: (BuildContext context) {
+        return MyListViewModel();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("MyList"),
+          elevation: 3,
+        ),
+        body: Body(),
       ),
-      body: Container(),
     );
   }
 }
