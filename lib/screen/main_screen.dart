@@ -24,8 +24,8 @@ class _MainScreenState extends State<MainScreen> {
   static List<Widget> _screenOption = [
     HomeScreen(),
     MyListScreen(),
-    HomeScreen(),
-    MessageScreen()
+    MessageScreen(),
+    ProfileScreen()
   ];
 
   void _onTappedItem(int index) {
