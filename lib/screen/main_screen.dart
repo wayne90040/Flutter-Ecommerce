@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/screen/home/home_screen.dart';
+import 'package:flutter_ecommerce/screen/message/message_screen.dart';
 import 'package:flutter_ecommerce/screen/profile/profile_screen.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -22,7 +23,7 @@ class _MainScreenState extends State<MainScreen> {
   static List<Widget> _screenOption = [
     HomeScreen(),
     HomeScreen(),
-    HomeScreen(),
+    MessageScreen(),
     ProfileScreen()
   ];
 
