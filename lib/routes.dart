@@ -9,6 +9,7 @@ import 'package:flutter_ecommerce/screen/help_center/problem_webview_screen.dart
 import 'package:flutter_ecommerce/screen/home/home_screen.dart';
 import 'package:flutter_ecommerce/screen/login_success/login_success_screen.dart';
 import 'package:flutter_ecommerce/screen/main_screen.dart';
+import 'package:flutter_ecommerce/screen/message/message_screen.dart';
 import 'package:flutter_ecommerce/screen/my_account/my_account_screen.dart';
 import 'package:flutter_ecommerce/screen/notification/notification_screen.dart';
 import 'package:flutter_ecommerce/screen/otp/otp_screen.dart';
@@ -34,6 +35,7 @@ final Map<String, WidgetBuilder> routes = {
   ProfileScreen.routeName: (context) => ProfileScreen(),
   MyAccountScreen.routeName: (context) => MyAccountScreen(),
   MainScreen.routeName: (context) => MainScreen(),
+  MessageScreen.routeName: (context) => MessageScreen(),
   SettingScreen.routeName: (context) => SettingScreen(),
   HelpCenterScreen.routeName: (context) => HelpCenterScreen(),
   NotificationScreen.routeName: (context) => NotificationScreen(),
