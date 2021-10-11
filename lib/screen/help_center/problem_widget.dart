@@ -15,7 +15,6 @@ class ProblemWidget extends StatefulWidget {
 class _ProblemWidgetState extends State<ProblemWidget> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<HelpCenterViewModel>(context, listen: false).getHelpCenterModelInFirebase();
   }
@@ -48,8 +47,6 @@ class _ProblemWidgetState extends State<ProblemWidget> {
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
-          // Go to WebView
-          print(model.title);
           Navigator.pushNamed(context, ProblemWebViewScreen.routeName, arguments: model);
         },
         child: Column(
