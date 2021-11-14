@@ -19,6 +19,7 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
 
   final _formKey = GlobalKey<FormState>();
+  late String userName;
   late String email;
   late String password;
   late String confirmPassword;
@@ -33,27 +34,68 @@ class _SignUpFormState extends State<SignUpForm> {
       key: _formKey,
       child: Column(
         children: [
+          _buildUserNameTextFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
+
           _buildEmailTextFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
+
           _buildPasswordTextFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
+
           _buildConfirmPassTextFormField(),
           SizedBox(height: 10),
+
           FormError(errors: viewModel.errors),
           SizedBox(height: getProportionateScreenHeight(40)),
+
           DefaultButton(
             text: "Continue",
             onTapped: () {
               _formKey.currentState!.save();
-              viewModel.registrationWithEmail(email: email, password: password, confirmPassword: confirmPassword).then((result) {
+
+              viewModel.registerWithEmailInSpring(username: userName, email: email, password: password, confirmPassword: confirmPassword).then((result) {
                 if (result) {
                   Navigator.pushNamedAndRemoveUntil(context, CompleteProfileScreen.routeName, (route) => false);
                 }
               });
+
+              // viewModel.registrationWithEmail(email: email, password: password, confirmPassword: confirmPassword).then((result) {
+              //   if (result) {
+              //     Navigator.pushNamedAndRemoveUntil(context, CompleteProfileScreen.routeName, (route) => false);
+              //   }
+              // });
             }
           )
         ],
       )
+    );
+  }
+
+  TextFormField _buildUserNameTextFormField() {
+    return TextFormField(
+      onSaved: (value) {
+        userName = value!;
+      },
+      decoration: InputDecoration(
+        labelText: "Username",
+        hintText: "Enter your username",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffix(svgIcon: "assets/icons/User.svg",)
+      ),
+    );
+  }
+
+  TextFormField _buildEmailTextFormField() {
+    return TextFormField(
+      keyboardType: TextInputType.emailAddress,
+      onSaved: (value) => email = value!,
+      decoration: InputDecoration(
+          labelText: "Email",
+          hintText: "Enter your email",
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: CustomSurffix(svgIcon: "assets/icons/Mail.svg",)
+      ),
     );
   }
 
@@ -83,19 +125,6 @@ class _SignUpFormState extends State<SignUpForm> {
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffix(svgIcon: "assets/icons/Lock.svg"),
-      ),
-    );
-  }
-
-  TextFormField _buildEmailTextFormField() {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      onSaved: (value) => email = value!,
-      decoration: InputDecoration(
-          labelText: "Email",
-          hintText: "Enter your email",
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: CustomSurffix(svgIcon: "assets/icons/Mail.svg",)
       ),
     );
   }

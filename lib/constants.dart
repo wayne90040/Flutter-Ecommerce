@@ -56,7 +56,8 @@ const String kPasswordError = "Error Passwords";
 const String kEmailNotExistError = "Email not register";
 const String kTooManyRequest = "Try Too Many, Please wait";
 const String kEmailAlreadyInUse = "Email Already Register";
+const String kServerError = "Server Error, Please wait";
 
 
 // Server API
-const String baseUrl = "";
+const String baseUrl = "http://2b4a-58-115-69-75.ngrok.io/api/v1";

@@ -1,5 +1,9 @@
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -8,7 +12,8 @@ import 'package:flutter_ecommerce/constants.dart';
 import 'package:flutter_ecommerce/share_preference_manager.dart';
 
 class SignUpViewModel extends ChangeNotifier {
-
+  
+  var dio = Dio();
   List<String> _errors = [];
   List<String> get errors => _errors;
 
@@ -24,6 +29,45 @@ class SignUpViewModel extends ChangeNotifier {
       _errors.remove(error);
       notifyListeners();
     }
+  }
+
+  bool _validEmail({required String email}) {
+    if (email.isEmpty) {
+      _addError(error: kEmailNullError);
+      return false;
+    } else {
+      _removeError(error: kEmailNullError);
+      if (!emailValidatorRegExp.hasMatch(email)) {
+        _addError(error: kInvalidEmailError);
+        return false;
+      } else {
+        _removeError(error: kInvalidEmailError);
+      }
+    }
+    return true;
+  }
+
+  bool _validPassword({required String password, required String confirmPassword}) {
+    if (password.isEmpty) {
+      _addError(error: kPassNullError);
+      return false;
+    } else {
+      _removeError(error: kPassNullError);
+      if (password.length < 8) {
+        _addError(error: kShortPassError);
+        return false;
+      } else {
+        _removeError(error: kShortPassError);
+        if (password != confirmPassword) {
+          _addError(error: kMatchPassError);
+          return false;
+        }
+        else {
+          _removeError(error: kMatchPassError);
+        }
+      }
+    }
+    return true;
   }
 
   Future<bool> registrationWithEmail({
@@ -77,42 +121,58 @@ class SignUpViewModel extends ChangeNotifier {
     return Future.value(false);
   }
 
-  bool _validEmail({required String email}) {
-    if (email.isEmpty) {
-      _addError(error: kEmailNullError);
-      return false;
-    } else {
-      _removeError(error: kEmailNullError);
-      if (!emailValidatorRegExp.hasMatch(email)) {
-        _addError(error: kInvalidEmailError);
-        return false;
-      } else {
-        _removeError(error: kInvalidEmailError);
+  Future<bool> registerWithEmailInSpring({
+    required String username, 
+    required String email, 
+    required String password,
+    required String confirmPassword }) async {
+
+    print(username);
+    print(email);
+    print(password);
+    print(confirmPassword);
+
+    if (!_validEmail(email: email) || !_validPassword(password: password, confirmPassword: confirmPassword)) {
+      return Future.value(false);
+    }
+
+    var body = {
+      "username": username,
+      "email": email,
+      "password": password
+    };
+
+    try {
+
+      final _ = await dio.post("$baseUrl/registration",
+          options: Options(headers: {HttpHeaders.contentTypeHeader: "application/json"}),
+          data: jsonEncode(body)
+      );
+      return Future.value(true);
+
+    } on DioError catch (e) {
+
+      print(e.message);
+      print(e.response!.data);
+
+      final response = e.response;
+      final data = response?.data;
+
+      if (data != null && data is Map) {
+        final error = data["error"];
+
+        switch (error) {
+          case "EMAIL_IS_EXIST":
+            _addError(error: kEmailAlreadyInUse);
+            break;
+
+          default:
+            _addError(error: kServerError);
+            break;
+        }
       }
     }
-    return true;
+    return Future.value(false);
   }
 
-  bool _validPassword({required String password, required String confirmPassword}) {
-    if (password.isEmpty) {
-      _addError(error: kPassNullError);
-      return false;
-    } else {
-      _removeError(error: kPassNullError);
-      if (password.length < 8) {
-        _addError(error: kShortPassError);
-        return false;
-      } else {
-        _removeError(error: kShortPassError);
-        if (password != confirmPassword) {
-          _addError(error: kMatchPassError);
-          return false;
-        }
-        else {
-          _removeError(error: kMatchPassError);
-        }
-      }
-    }
-    return true;
-  }
 }
