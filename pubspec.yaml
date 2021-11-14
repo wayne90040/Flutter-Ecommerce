@@ -46,6 +46,9 @@ dependencies:
   # WebView
   webview_flutter: ^2.0.13
 
+  # Web Server
+  dio: ^4.0.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
