@@ -127,11 +127,6 @@ class SignUpViewModel extends ChangeNotifier {
     required String password,
     required String confirmPassword }) async {
 
-    print(username);
-    print(email);
-    print(password);
-    print(confirmPassword);
-
     if (!_validEmail(email: email) || !_validPassword(password: password, confirmPassword: confirmPassword)) {
       return Future.value(false);
     }
@@ -143,7 +138,6 @@ class SignUpViewModel extends ChangeNotifier {
     };
 
     try {
-
       final _ = await dio.post("$baseUrl/registration",
           options: Options(headers: {HttpHeaders.contentTypeHeader: "application/json"}),
           data: jsonEncode(body)
@@ -151,9 +145,6 @@ class SignUpViewModel extends ChangeNotifier {
       return Future.value(true);
 
     } on DioError catch (e) {
-
-      print(e.message);
-      print(e.response!.data);
 
       final response = e.response;
       final data = response?.data;
@@ -166,13 +157,22 @@ class SignUpViewModel extends ChangeNotifier {
             _addError(error: kEmailAlreadyInUse);
             break;
 
+          case "USERNAME_IS_EXIST":
+            _addError(error: kUsernameAlreadyInUse);
+            break;
+
+          case "EMAIL_NOT_VALID":
+            _addError(error: kInvalidEmailError);
+            break;
+
           default:
             _addError(error: kServerError);
             break;
         }
+      } else {
+        _addError(error: kServerError);
       }
     }
     return Future.value(false);
   }
-
 }
