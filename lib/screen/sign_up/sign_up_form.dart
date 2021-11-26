@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/api_service.dart';
 import 'package:flutter_ecommerce/screen/complete_profile/complete_profile_screen.dart';
 import 'package:flutter_ecommerce/viewmodels/sign_up_view_model.dart';
 import 'package:flutter_ecommerce/widget/custom_surffix_icon.dart';
@@ -53,18 +54,17 @@ class _SignUpFormState extends State<SignUpForm> {
             text: "Continue",
             onTapped: () {
               _formKey.currentState!.save();
-
-              viewModel.registerWithEmailInSpring(username: userName, email: email, password: password, confirmPassword: confirmPassword).then((result) {
-                if (result) {
+              viewModel.registerWithEmailInSpring(userName, email, password, confirmPassword).then((success) {
+                if (success) {
                   Navigator.pushNamedAndRemoveUntil(context, CompleteProfileScreen.routeName, (route) => false);
+
+                  ApiService().loginWithEmail(email, password).then((result) {
+                    if (result.success) {
+
+                    }
+                  });
                 }
               });
-
-              // viewModel.registrationWithEmail(email: email, password: password, confirmPassword: confirmPassword).then((result) {
-              //   if (result) {
-              //     Navigator.pushNamedAndRemoveUntil(context, CompleteProfileScreen.routeName, (route) => false);
-              //   }
-              // });
             }
           )
         ],

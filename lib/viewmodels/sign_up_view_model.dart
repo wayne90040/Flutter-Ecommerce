@@ -1,6 +1,4 @@
 
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
@@ -8,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/api_service.dart';
 import 'package:flutter_ecommerce/constants.dart';
 import 'package:flutter_ecommerce/share_preference_manager.dart';
 
@@ -121,58 +120,16 @@ class SignUpViewModel extends ChangeNotifier {
     return Future.value(false);
   }
 
-  Future<bool> registerWithEmailInSpring({
-    required String username, 
-    required String email, 
-    required String password,
-    required String confirmPassword }) async {
+  Future<bool> registerWithEmailInSpring(String username, String email, String password, String confirmPassword) async {
 
     if (!_validEmail(email: email) || !_validPassword(password: password, confirmPassword: confirmPassword)) {
       return Future.value(false);
     }
 
-    var body = {
-      "username": username,
-      "email": email,
-      "password": password
-    };
-
-    try {
-      final _ = await dio.post("$baseUrl/registration",
-          options: Options(headers: {HttpHeaders.contentTypeHeader: "application/json"}),
-          data: jsonEncode(body)
-      );
-      return Future.value(true);
-
-    } on DioError catch (e) {
-
-      final response = e.response;
-      final data = response?.data;
-
-      if (data != null && data is Map) {
-        final error = data["error"];
-
-        switch (error) {
-          case "EMAIL_IS_EXIST":
-            _addError(error: kEmailAlreadyInUse);
-            break;
-
-          case "USERNAME_IS_EXIST":
-            _addError(error: kUsernameAlreadyInUse);
-            break;
-
-          case "EMAIL_NOT_VALID":
-            _addError(error: kInvalidEmailError);
-            break;
-
-          default:
-            _addError(error: kServerError);
-            break;
-        }
-      } else {
-        _addError(error: kServerError);
-      }
+    NormalResult result = await ApiService().registerWithEmail(username, email, password);
+    if (result.errorDesc != null) {
+      _addError(error: result.errorDesc ?? "");
     }
-    return Future.value(false);
+    return Future.value(result.success);
   }
 }

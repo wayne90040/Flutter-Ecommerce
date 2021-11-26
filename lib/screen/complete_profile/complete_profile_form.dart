@@ -2,9 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/screen/home/home_screen.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_ecommerce/screen/main_screen.dart';
-import 'package:flutter_ecommerce/screen/otp/otp_screen.dart';
 import 'package:flutter_ecommerce/viewmodels/complete_profile_view_model.dart';
 import 'package:flutter_ecommerce/widget/custom_surffix_icon.dart';
 import 'package:flutter_ecommerce/widget/default_button.dart';
@@ -17,20 +16,18 @@ import '../../utils.dart';
 
 
 class CompleteProfileForm extends StatefulWidget {
+
   @override
   _CompleteProfileFormState createState() => _CompleteProfileFormState();
 }
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
   final _formKey = GlobalKey<FormState>();
-
   final List<String> errors = [];
-
-  late String name;
-  late String account;
-  late String phone;
-  String birthday = "";
-  String gender = "";
+  late String name = "";
+  late String phone = "";
+  late String birthday = "";
+  late String gender = "";
 
   void addError({required String error}) {
     if (!errors.contains(error)) {
@@ -59,20 +56,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       child: Column(
         children: [
 
-          _buildAccountTextFormField(),
-
-          SizedBox(height: getProportionateScreenHeight(20)),
-
           _buildNameTextFormField(),
-          
           SizedBox(height: getProportionateScreenHeight(20)),
 
           _buildBirthDayTextFormField(),
-
           SizedBox(height: getProportionateScreenHeight(20)),
           
           _buildGenderTextFormField(),
-          
           SizedBox(height: getProportionateScreenHeight(20)),
 
           _buildPhoneTextFormField(),
@@ -82,16 +72,18 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           
           DefaultButton(
-              text: "continue",
-              onTapped: () {
-                _formKey.currentState!.validate();
-                // _formKey.currentState!.save();
-                // viewModel.completeProfileInFirebase();
+            text: "continue",
+            onTapped: () {
+              _formKey.currentState!.save();
+              viewModel.completeProfileWithSpring(name, birthday, gender, phone);
 
-                // if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-                //   Navigator.pushNamed(context, OtpScreen.routeName);
-                // }
-              }
+              // _formKey.currentState!.save();
+              // viewModel.completeProfileInFirebase();
+
+              // if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+              //   Navigator.pushNamed(context, OtpScreen.routeName);
+              // }
+            }
           ),
           SizedBox(height: 10),
           MaterialButton(
@@ -209,25 +201,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
               suffixIcon: CustomSurffix(svgIcon: "assets/icons/User.svg",)
           ),
         ),
-      ),
-    );
-  }
-
-  TextFormField _buildAccountTextFormField() {
-    return TextFormField(
-      onSaved: (value) => account = value ?? "",
-      validator: (value) {
-        String strongValue = value ?? "";
-        if (strongValue.isEmpty) {
-          addError(error: kNameNullError);
-          return "";
-        }
-      },
-      decoration: InputDecoration(
-          labelText: "Account",
-          hintText: "Enter your account",
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: CustomSurffix(svgIcon: "assets/icons/User.svg",)
       ),
     );
   }

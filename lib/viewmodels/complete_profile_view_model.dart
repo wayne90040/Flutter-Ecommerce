@@ -1,9 +1,12 @@
 
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/constants.dart';
 
 class CompleteProfileViewModel extends ChangeNotifier {
+
   List<String> _errors = [];
   List<String> get errors => _errors;
 
@@ -19,50 +22,22 @@ class CompleteProfileViewModel extends ChangeNotifier {
     }
   }
 
-  bool completeProfileInFirebase({
-    required String name,
-    required String account,
-    required String phone,
-    required String birthday,
-    required String gender
-  }) {
+  Future<bool> completeProfileWithSpring(String name, String birthday, String gender, String phone) async {
+    var dio = Dio();
 
-    if (name.isEmpty) {
-      _addError(error: kNameNullError);
-      return false;
-    } else {
-      _removeError(error: kNameNullError);
+    Map<String, dynamic> body = {
+      "name": name,
+      "gender": gender == "male" ? 1 : 0,
+      "birthday": birthday,
+      "phone": phone
+    };
+
+    try {
+      await dio.post("$baseUrl/users/detail", options: Options(headers: {HttpHeaders.contentTypeHeader: "application/json"}), data: body);
+      return Future.value(true);
+    } on DioError catch (e) {
+      _addError(error: kServerError);
     }
-
-    if (account.isEmpty) {
-      _addError(error: kAccountNullError);
-      return false;
-    } else {
-      _removeError(error: kAccountNullError);
-    }
-
-    if (phone.isEmpty) {
-      _addError(error: kPhoneNumberNullError);
-      return false;
-    } else {
-      _removeError(error: kPhoneNumberNullError);
-    }
-
-    if (birthday.isEmpty) {
-      _addError(error: kBirthdayNullError);
-      return false;
-    } else {
-      _removeError(error: kBirthdayNullError);
-    }
-
-    if (gender.isEmpty) {
-      _addError(error: kGenderNullError);
-      return false;
-    } else {
-      _removeError(error: kGenderNullError);
-    }
-
-
-    return true;
+    return Future.value(false);
   }
 }
