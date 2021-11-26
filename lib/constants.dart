@@ -57,6 +57,7 @@ const String kEmailNotExistError = "Email not register";
 const String kTooManyRequest = "Try Too Many, Please wait";
 const String kEmailAlreadyInUse = "Email Already Register";
 const String kServerError = "Server Error, Please wait";
+const String kUsernameAlreadyInUse = "Username Already register";
 
 
 // Server API
