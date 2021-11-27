@@ -56,11 +56,9 @@ class _SignUpFormState extends State<SignUpForm> {
               _formKey.currentState!.save();
               viewModel.registerWithEmailInSpring(userName, email, password, confirmPassword).then((success) {
                 if (success) {
-                  Navigator.pushNamedAndRemoveUntil(context, CompleteProfileScreen.routeName, (route) => false);
-
                   ApiService().loginWithEmail(email, password).then((result) {
                     if (result.success) {
-
+                      Navigator.pushNamedAndRemoveUntil(context, CompleteProfileScreen.routeName, (route) => false);
                     }
                   });
                 }

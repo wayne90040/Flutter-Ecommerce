@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_ecommerce/screen/main_screen.dart';
+import 'package:flutter_ecommerce/screen/otp/otp_screen.dart';
 import 'package:flutter_ecommerce/viewmodels/complete_profile_view_model.dart';
 import 'package:flutter_ecommerce/widget/custom_surffix_icon.dart';
 import 'package:flutter_ecommerce/widget/default_button.dart';
@@ -75,14 +76,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             text: "continue",
             onTapped: () {
               _formKey.currentState!.save();
-              viewModel.completeProfileWithSpring(name, birthday, gender, phone);
-
-              // _formKey.currentState!.save();
-              // viewModel.completeProfileInFirebase();
-
-              // if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-              //   Navigator.pushNamed(context, OtpScreen.routeName);
-              // }
+              viewModel.completeProfileWithSpring(name, birthday, gender, phone).then((success) {
+                if (success) {
+                  Navigator.pushNamed(context, OtpScreen.routeName);
+                }
+              });
             }
           ),
           SizedBox(height: 10),
@@ -135,17 +133,16 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       },
       child: AbsorbPointer(
         child: TextFormField(
-          onSaved: (value) => gender = value ?? "",
           onChanged: (value) {
             if (value.isNotEmpty) {
-              removeError(error: kPhoneNumberNullError);
+              removeError(error: kGenderNullError);
             }
             return null;
           },
           validator: (optionValue) {
             String value = optionValue ?? "";
             if (value.isEmpty) {
-              addError(error: kPhoneNumberNullError);
+              addError(error: kGenderNullError);
               return "";
             }
             return null;
@@ -168,7 +165,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         if (FocusManager.instance.primaryFocus != null) {
           FocusManager.instance.primaryFocus!.unfocus();
         }
-
         Utils.showSheet(
             context: context,
             child: _buildDatePicker(),
@@ -179,17 +175,17 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       },
       child: AbsorbPointer(
         child: TextFormField(
-          onSaved: (value) => birthday = value ?? "",
+          // onSaved: (value) => birthday = value ?? "",
           onChanged: (value) {
             if (value.isNotEmpty) {
-              removeError(error: kPhoneNumberNullError);
+              removeError(error: kBirthdayNullError);
             }
             return null;
           },
           validator: (optionValue) {
             String value = optionValue ?? "";
             if (value.isEmpty) {
-              addError(error: kPhoneNumberNullError);
+              addError(error: kBirthdayNullError);
               return "";
             }
             return null;

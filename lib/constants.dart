@@ -61,4 +61,4 @@ const String kUsernameAlreadyInUse = "Username Already register";
 
 
 // Server API
-const String baseUrl = "http://2b4a-58-115-69-75.ngrok.io/api/v1";
+const String baseUrl = "http://68c8-58-115-69-75.ngrok.io/api/v1";

@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/screen/main_screen.dart';
 import 'package:flutter_ecommerce/widget/default_button.dart';
 
 import '../../constants.dart';
@@ -109,9 +110,9 @@ class _OtpFormState extends State<OtpForm> {
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.15),
               DefaultButton(text: "Continue", onTapped: () {
-
+                // TODO: OTP Continue
+                Navigator.pushNamedAndRemoveUntil(context, MainScreen.routeName, (route) => false);
               }),
-
             ]
         )
     );
