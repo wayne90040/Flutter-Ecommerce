@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_ecommerce/api_service.dart';
 import 'package:flutter_ecommerce/share_preference_manager.dart';
 import 'package:flutter_ecommerce/constants.dart';
 
@@ -22,6 +23,26 @@ class SignInViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<bool> signInWithSpring(String email, String password) async {
+
+    // TODO: Valid Email
+    _errors.clear();
+
+    NormalResult result =  await ApiService().loginWithEmail(email, password);
+
+    if (result.errorDesc != null) {
+      if (result.errorDesc!.contains("NOT FOUND")) {
+        _addError(error: kEmailNotExistError);
+      } else if (result.errorDesc!.contains("Forbidden")) {
+        _addError(error: kPasswordError);
+      } else {
+        _addError(error: kServerError);
+      }
+    }
+    return Future.value(result.success);
+  }
+
 
   Future<bool> signInWithFirebaseEmail({required String email, required String password}) async {
 

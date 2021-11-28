@@ -42,7 +42,7 @@ class _SignFormState extends State<SignForm> {
           Row(
             children: [
               Checkbox(
-                  value: isRememberPassword,  // 勾勾的 color
+                  value: isRememberPassword,
                   activeColor: kPrimaryColor,
                   onChanged: (value) {
                     setState(() {
@@ -67,11 +67,8 @@ class _SignFormState extends State<SignForm> {
             text: "Continue",
             onTapped: () {
               _formKey.currentState!.save();
-              viewModel.signInWithFirebaseEmail(email: email, password: password).then((result) {
-                if (result) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(LoginSuccessScreen.routeName,
-                          (Route<dynamic> route) => false);
-                }
+              viewModel.signInWithSpring(email, password).then((success) {
+                if (success) Navigator.of(context).pushNamedAndRemoveUntil(LoginSuccessScreen.routeName, (Route<dynamic> route) => false);
               });
             },
           )
