@@ -28,12 +28,7 @@ class LandingIconWidget extends StatelessWidget {
               AspectRatio(  // 寬高比
                 aspectRatio: 1,
                 child: Container(
-                  padding: EdgeInsets.all(getProportionateScreenWidth(15)),
-                  decoration: BoxDecoration(
-                      color: Color(0xFFFFECDF),
-                      borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: SvgPicture.asset(iconSrc),
+                  child: Image.network(iconSrc, fit: BoxFit.fill),
                 ),
               ),
               SizedBox(height: 5),

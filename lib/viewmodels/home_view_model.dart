@@ -1,9 +1,12 @@
 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_ecommerce/api_service.dart';
 import 'package:flutter_ecommerce/models/landing_model.dart';
 import 'package:flutter_ecommerce/models/home_banner_model.dart';
+import 'package:flutter_ecommerce/models/zone.dart';
 
 class HomeViewModel extends ChangeNotifier {
   
@@ -12,6 +15,9 @@ class HomeViewModel extends ChangeNotifier {
 
   late List<LandingModel> _landings = [LandingModel(text: "", iconPath: "assets/icons/Flash Icon.svg", clickThrough: "")];
   List<LandingModel> get landings => _landings;
+
+  late Zone _zone = Zone("", []);
+  Zone get zone => _zone;
 
   void getHomeBannerInFirebase() {
     FirebaseFirestore.instance.collection('home_page').doc('banners').get().then((DocumentSnapshot documentSnapshot) {
@@ -46,5 +52,14 @@ class HomeViewModel extends ChangeNotifier {
       LandingModel(text: "Daily Gift", iconPath: "assets/icons/Gift Icon.svg", clickThrough: ""),
       LandingModel(text: "More", iconPath: "assets/icons/Discover.svg", clickThrough: ""),
     ];
+  }
+
+  void getZone() {
+    ApiService().getZoneCategories().then((result) {
+      if (!result.success) return;
+
+      _zone = result.response as Zone;
+      notifyListeners();
+    });
   }
 }

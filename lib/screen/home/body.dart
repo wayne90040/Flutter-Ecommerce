@@ -27,10 +27,9 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
 
   @override void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<HomeViewModel>(context, listen: false).getHomeBannerInFirebase();
-    Provider.of<HomeViewModel>(context, listen: false).getLandings();
+    Provider.of<HomeViewModel>(context, listen: false).getZone();
   }
 
   @override
@@ -70,8 +69,8 @@ class _BodyState extends State<Body> {
               ),
               SizedBox(height: getProportionateScreenHeight(20)),
 
-              // TODO: Headers
-              HomeHeader(models: viewModel.landings),
+              // TODO: Zone
+              HomeHeader(zones: viewModel.zone.zones),
               SizedBox(height: getProportionateScreenHeight(20)),
 
               // TODO: Home Banner

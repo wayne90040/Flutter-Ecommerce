@@ -3,16 +3,19 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_ecommerce/models/zone.dart';
 import 'package:flutter_ecommerce/share_preference_manager.dart';
 
 import 'constants.dart';
 
 class NormalResult {
   bool success;
+  dynamic response;
   String? errorDesc;
 
-  NormalResult(this.success, this.errorDesc);
+  NormalResult(this.success, this.response, this.errorDesc);
 }
+
 
 
 class ApiService {
@@ -39,7 +42,7 @@ class ApiService {
           options: Options(headers: {HttpHeaders.contentTypeHeader: "application/json"}),
           data: body);
 
-      return Future.value(NormalResult(true, null));
+      return Future.value(NormalResult(true, null, null));
 
     } on DioError catch (e) {
       dynamic data = e.response?.data;
@@ -60,7 +63,7 @@ class ApiService {
           break;
       }
     }
-    return Future.value(NormalResult(false, desc));
+    return Future.value(NormalResult(false, null, desc));
   }
 
   /* Login */
@@ -83,13 +86,13 @@ class ApiService {
 
       SharePreferenceManager.set(SharePreferenceKey.accessToken, accessToken);
 
-      return Future.value(NormalResult(true, null));
+      return Future.value(NormalResult(true, null, null));
 
     } on DioError catch (e) {
       var data = e.response?.data;
       desc = data is Map ? data["error"] : "";
     }
-    return Future.value(NormalResult(false, desc));
+    return Future.value(NormalResult(false, null, desc));
   }
 
   /* Post User Detail */
@@ -113,12 +116,36 @@ class ApiService {
           }),
           data: body
       );
-      return Future.value(NormalResult(true, null));
+      return Future.value(NormalResult(true, null, null));
 
     } on DioError catch (e) {
       var data = e.response?.data;
       desc = data is Map ? data["error"] : "";
     }
-    return Future.value(NormalResult(false, desc));
+    return Future.value(NormalResult(false, null, desc));
+  }
+
+  /* Get Zone Categories */
+  Future<NormalResult> getZoneCategories() async {
+
+    String accessToken = await SharePreferenceManager.get(SharePreferenceKey.accessToken);
+    Zone? result;
+
+    try {
+      var response = await Dio().get("$baseUrl/zone",
+          options: Options(headers: {
+            HttpHeaders.contentTypeHeader: "application/json",
+            HttpHeaders.authorizationHeader: accessToken
+          })
+      );
+      var data = response.data as Map<String, dynamic>;
+      result = Zone.fromJson(data);
+
+      return Future.value(NormalResult(true, result, null));
+    } on DioError catch (e) {
+
+    }
+
+    return Future.value(NormalResult(false, result, ""));
   }
 }
