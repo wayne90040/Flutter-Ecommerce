@@ -29,6 +29,8 @@ class _BodyState extends State<Body> {
   @override void initState() {
     super.initState();
     Provider.of<HomeViewModel>(context, listen: false).getHomeBannerInFirebase();
+    Provider.of<HomeViewModel>(context, listen: false).getLandings();
+    Provider.of<HomeViewModel>(context, listen: false).callDiscountApi();
     Provider.of<HomeViewModel>(context, listen: false).getZone();
   }
 
@@ -46,7 +48,7 @@ class _BodyState extends State<Body> {
           child: Column(
             children: [
               SizedBox(height: getProportionateScreenHeight(20)),
-              // TODO: Home Header
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -74,7 +76,7 @@ class _BodyState extends State<Body> {
               SizedBox(height: getProportionateScreenHeight(20)),
 
               // TODO: Home Banner
-              DiscountBanner(),
+              DiscountBanner(discounts: viewModel.discount),
               SizedBox(height: getProportionateScreenHeight(20)),
 
               // TODO: Special of you

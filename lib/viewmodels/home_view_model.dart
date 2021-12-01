@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_ecommerce/api_service.dart';
+import 'package:flutter_ecommerce/models/discount.dart';
 import 'package:flutter_ecommerce/models/landing_model.dart';
 import 'package:flutter_ecommerce/models/home_banner_model.dart';
 import 'package:flutter_ecommerce/models/zone.dart';
@@ -18,6 +19,9 @@ class HomeViewModel extends ChangeNotifier {
 
   late Zone _zone = Zone("", []);
   Zone get zone => _zone;
+
+  Discount? _discount;
+  Discount? get discount => _discount;
 
   void getHomeBannerInFirebase() {
     FirebaseFirestore.instance.collection('home_page').doc('banners').get().then((DocumentSnapshot documentSnapshot) {
@@ -59,6 +63,15 @@ class HomeViewModel extends ChangeNotifier {
       if (!result.success) return;
 
       _zone = result.response as Zone;
+      notifyListeners();
+    });
+  }
+  
+  void callDiscountApi() {
+    ApiService().getDiscounts("supermarket").then((result) {
+      if (!result.success) return;
+
+      _discount = result.response as Discount;
       notifyListeners();
     });
   }

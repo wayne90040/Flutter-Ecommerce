@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/models/discount.dart';
 import 'package:flutter_ecommerce/models/home_banner_model.dart';
 import 'package:flutter_ecommerce/viewmodels/home_view_model.dart';
 import 'package:provider/provider.dart';
@@ -9,9 +10,14 @@ import 'package:provider/provider.dart';
 import '../../size_config.dart';
 
 class DiscountBanner extends StatelessWidget {
+
+  final Discount? discounts;
+
   const DiscountBanner({
     Key? key,
+    required this.discounts
   }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +27,8 @@ class DiscountBanner extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          ...List.generate(viewModel.homeBanner.discountBanners.length, (index) {
-            DiscountBannerModel model = viewModel.homeBanner.discountBanners[index];
+          ...List.generate(discounts?.discounts.length ?? 0, (index) {
+            DiscountItem? model = discounts?.discounts[index];
 
             return Padding(
               padding: const EdgeInsets.only(right: 20),
@@ -40,11 +46,11 @@ class DiscountBanner extends StatelessWidget {
                   ),
                   child: Text.rich(
                     TextSpan(
-                      text: "${model.title}\n",
+                      text: "${model?.title}\n",
                       style: TextStyle(color: Colors.white),
                       children: [
                         TextSpan(
-                            text: model.value,
+                            text: model?.value,
                             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
                         )
                       ]
@@ -52,7 +58,7 @@ class DiscountBanner extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  print("${model.title})}");
+                  print("${model?.title})}");
                 },
               ),
             );
