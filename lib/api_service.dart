@@ -3,15 +3,21 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_ecommerce/models/discount.dart';
 import 'package:flutter_ecommerce/share_preference_manager.dart';
 
 import 'constants.dart';
 
+// Server API
+const String baseUrl = "http://8e97-58-115-69-75.ngrok.io/api/v1";
+
+
 class NormalResult {
   bool success;
+  dynamic response;
   String? errorDesc;
 
-  NormalResult(this.success, this.errorDesc);
+  NormalResult(this.success, this.response, this.errorDesc);
 }
 
 
@@ -39,7 +45,7 @@ class ApiService {
           options: Options(headers: {HttpHeaders.contentTypeHeader: "application/json"}),
           data: body);
 
-      return Future.value(NormalResult(true, null));
+      return Future.value(NormalResult(true, null, null));
 
     } on DioError catch (e) {
       dynamic data = e.response?.data;
@@ -60,7 +66,7 @@ class ApiService {
           break;
       }
     }
-    return Future.value(NormalResult(false, desc));
+    return Future.value(NormalResult(false, null, desc));
   }
 
   /* Login */
@@ -83,13 +89,13 @@ class ApiService {
 
       SharePreferenceManager.set(SharePreferenceKey.accessToken, accessToken);
 
-      return Future.value(NormalResult(true, null));
+      return Future.value(NormalResult(true, null, null));
 
     } on DioError catch (e) {
       var data = e.response?.data;
       desc = data is Map ? data["error"] : "";
     }
-    return Future.value(NormalResult(false, desc));
+    return Future.value(NormalResult(false, null, desc));
   }
 
   /* Post User Detail */
@@ -113,12 +119,37 @@ class ApiService {
           }),
           data: body
       );
-      return Future.value(NormalResult(true, null));
+      return Future.value(NormalResult(true, null, null));
 
     } on DioError catch (e) {
       var data = e.response?.data;
       desc = data is Map ? data["error"] : "";
     }
-    return Future.value(NormalResult(false, desc));
+    return Future.value(NormalResult(false, null, desc));
+  }
+
+  /* Get Discounts */
+  Future<NormalResult> getDiscounts(String zoneId) async {
+
+    String accessToken = await SharePreferenceManager.get(SharePreferenceKey.accessToken);
+
+    try {
+      var response = await Dio().get("$baseUrl/discount",
+        options: Options(headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          HttpHeaders.authorizationHeader: accessToken,
+        }),
+        queryParameters: {
+          "zone": "supermarket"
+        }
+      );
+
+      var json = response.data as Map<String, dynamic>;
+
+      return Future.value(NormalResult(true, Discount.fromJson(json), null));
+    } on DioError catch (e) {
+
+    }
+    return Future.value(NormalResult(false, null, null));
   }
 }

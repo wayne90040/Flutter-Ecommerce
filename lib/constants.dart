@@ -58,7 +58,3 @@ const String kTooManyRequest = "Try Too Many, Please wait";
 const String kEmailAlreadyInUse = "Email Already Register";
 const String kServerError = "Server Error, Please wait";
 const String kUsernameAlreadyInUse = "Username Already register";
-
-
-// Server API
-const String baseUrl = "http://68c8-58-115-69-75.ngrok.io/api/v1";

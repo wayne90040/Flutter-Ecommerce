@@ -2,6 +2,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_ecommerce/api_service.dart';
+import 'package:flutter_ecommerce/models/discount.dart';
 import 'package:flutter_ecommerce/models/landing_model.dart';
 import 'package:flutter_ecommerce/models/home_banner_model.dart';
 
@@ -12,6 +14,9 @@ class HomeViewModel extends ChangeNotifier {
 
   late List<LandingModel> _landings = [LandingModel(text: "", iconPath: "assets/icons/Flash Icon.svg", clickThrough: "")];
   List<LandingModel> get landings => _landings;
+
+  Discount? _discount;
+  Discount? get discount => _discount;
 
   void getHomeBannerInFirebase() {
     FirebaseFirestore.instance.collection('home_page').doc('banners').get().then((DocumentSnapshot documentSnapshot) {
@@ -46,5 +51,14 @@ class HomeViewModel extends ChangeNotifier {
       LandingModel(text: "Daily Gift", iconPath: "assets/icons/Gift Icon.svg", clickThrough: ""),
       LandingModel(text: "More", iconPath: "assets/icons/Discover.svg", clickThrough: ""),
     ];
+  }
+
+  void callDiscountApi() {
+    ApiService().getDiscounts("supermarket").then((result) {
+      if (!result.success) return;
+
+      _discount = result.response as Discount;
+      notifyListeners();
+    });
   }
 }
