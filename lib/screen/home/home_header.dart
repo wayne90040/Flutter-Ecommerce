@@ -2,6 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/models/zone.dart';
+import 'package:flutter_ecommerce/viewmodels/home_view_model.dart';
+import 'package:provider/provider.dart';
 
 import 'landing_icon_widget.dart';
 
@@ -17,6 +19,8 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    var viewModel = Provider.of<HomeViewModel>(context);
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -24,16 +28,16 @@ class HomeHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ...List.generate(
-              zones.length, (index) => Padding(
-                padding: EdgeInsets.only(right: 15),
-                child: LandingIconWidget(
-                    iconSrc: zones[index].iconZh,
-                    iconText: zones[index].nameZh,
-                    onTapped: () {
-                      print("didTapped${zones[index].nameZh}");
-                    }
-                ),
-              )
+            zones.length, (index) => Padding(
+              padding: EdgeInsets.only(right: 15),
+              child: LandingIconWidget(
+                  iconSrc: zones[index].iconZh,
+                  iconText: zones[index].nameZh,
+                  onTapped: () {
+                    viewModel.callDiscountApi(zones[index].zoneId);
+                  }
+              ),
+            )
           )
         ],
       ),

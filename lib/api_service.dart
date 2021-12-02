@@ -166,7 +166,7 @@ class ApiService {
           HttpHeaders.authorizationHeader: accessToken,
         }),
         queryParameters: {
-          "zone": "supermarket"
+          "zone": zoneId
         }
       );
 

@@ -61,17 +61,18 @@ class HomeViewModel extends ChangeNotifier {
   void getZone() {
     ApiService().getZoneCategories().then((result) {
       if (!result.success) return;
-
       _zone = result.response as Zone;
       notifyListeners();
     });
   }
-  
-  void callDiscountApi() {
-    ApiService().getDiscounts("supermarket").then((result) {
-      if (!result.success) return;
 
-      _discount = result.response as Discount;
+  void callDiscountApi(String zoneId) {
+    ApiService().getDiscounts(zoneId).then((result) {
+      _discount = null;
+      if (result.response is Discount) {
+        Discount response = result.response;
+        _discount = response;
+      }
       notifyListeners();
     });
   }

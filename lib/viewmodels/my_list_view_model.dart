@@ -21,7 +21,6 @@ class MyListViewModel extends ChangeNotifier {
         Map<String, dynamic> jsonData = documentSnapshot.data() as Map<String, dynamic>;
         _myListModel = MyListModel.fromJson(jsonData);
         notifyListeners();
-        print(jsonData);
       }
     });
   }

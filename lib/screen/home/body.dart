@@ -30,12 +30,13 @@ class _BodyState extends State<Body> {
     super.initState();
     Provider.of<HomeViewModel>(context, listen: false).getHomeBannerInFirebase();
     Provider.of<HomeViewModel>(context, listen: false).getLandings();
-    Provider.of<HomeViewModel>(context, listen: false).callDiscountApi();
+    Provider.of<HomeViewModel>(context, listen: false).callDiscountApi("supermarket");
     Provider.of<HomeViewModel>(context, listen: false).getZone();
   }
 
   @override
   Widget build(BuildContext context) {
+
     var viewModel = Provider.of<HomeViewModel>(context);
 
     // TODO: implement build
